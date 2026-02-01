@@ -131,7 +131,7 @@
 		</Scripts>
     </Button>
 
-    <Frame name="FishingBuddySmallHeaderTemplate" virtual="true">
+    <Frame name="FishingBuddySmallHeaderTemplate" virtual="true" hidden="true">
 	<Layers>
 	    <Layer level="BACKGROUND">
 		<Texture file="Interface\PaperDollInfoFrame\UI-Character-General-TopLeft">

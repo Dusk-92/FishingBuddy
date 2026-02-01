@@ -1,6 +1,13 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 	<Script file="FishingOutfitFrame.lua"/>
+	<GameTooltip name="FishingOutfitTooltip" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate">
+		<Scripts> 
+			<OnLoad> 
+				this:SetOwner(WorldFrame, "ANCHOR_NONE"); 
+			</OnLoad> 
+		</Scripts> 
+	</GameTooltip>
 	<Button name="FishingOutfitFrameLabel" hidden="false" virtual="true">
 		<Size>
 			<AbsDimension x="90" y="16"/>
@@ -87,6 +94,13 @@
 					</OnLeave>
 				</Scripts>
 			</Button>
+			<Frame name="FishingOutfitUpdate" hidden="true">
+				<Scripts>
+					<OnUpdate>
+						FishingBuddy.OutfitFrame.Update(arg1);
+					</OnUpdate>
+				</Scripts>
+			</Frame>
 		</Frames>
 		<Scripts>
 			<OnLoad>

@@ -104,6 +104,14 @@ GraphHandler.Register = function(kind, what)
    end
 end
 
+GraphHandler.ClearPlot = function(frame)
+   for _,elem in { GraphHandler.BAR, GraphHandler.LEGEND } do
+      for idx,what in frame.elements[elem] do
+	 what:Hide();
+      end
+   end
+end
+
 GraphHandler.PlotData = function(frame, data, offset, skip, r, g, b)
   local limit = table.getn(data);
   local start = 1;
@@ -144,6 +152,7 @@ GraphHandler.PlotLegend = function(frame, ldx, name, item, texture, r, g, b)
       local color = getglobal(name.."Color");
 --      SetColorBar(color, legend, nil, nil, nil, nil, r, g, b);
       SetColorBar(color, legend, 0, 1, 10, 16, r, g, b);
+      color:Show();
       icon:Show();
       tex:SetTexture(texture);
       tex:Show();
@@ -233,6 +242,7 @@ GraphHandler.PlotGrid = function(frame, label, texth, width, textv, height)
 	       else
 		  text:SetPoint("TOP", line, "BOTTOM", 0, -4);
 	       end
+	       text:Show();
 	       tdx = tdx + 1;
 	    end
 	 end

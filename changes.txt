@@ -1,3 +1,88 @@
+Version 0.8.8e
+- Split out FBEnEspagnol addon to a separate download (new <ui.worldofwar.net> feature
+
+Version 0.8.8d
+- Update toc for patch 1.12
+- Small cleanup changes
+
+Version 0.8.8c
+- Handle "Oil Spills" as fishing pools
+- Fix an intermittent text alignment bug in the locations window
+- Make FishingBuddyFu for Fubar 2.0 work nicely (mostly expose some functions)
+
+Version 0.8.8b
+- Add tracking selection menu to locations window
+
+Version 0.8.8a
+- Fix a nil error in the tracking popup if you haven't caught one of the
+  default fish
+- '/fb updatedb' print out a message
+- Grab the names of fish we catch if we don't know it already (old data updating)
+
+Version 0.8.8
+- Improved cycle fish tracking -- right-click to choose fish to graph
+- Update the TastyFish count every time the window is shown during the
+  Exravaganza so that our count is always 'right'
+- Fix window always showing bug
+
+Version 0.8.7g
+- Fix a typo introduced in version f
+- Really, really check for Pat Nagle's Fish Terminator correctly (thanks Saur!)
+
+Version 0.8.7f
+- Put changes from d and e into the same release
+
+Version 0.8.7g
+- Fix a typo introduced in version f
+- Really, really check for Pat Nagle's Fish Terminator correctly
+
+Version 0.8.7f
+- Put changes from d and e into the same release
+
+Version 0.8.7e
+- Fix missing color 'YELLOW'
+- Fix translation errors that were causing string.format errors in German and Spanish
+- Fix problems with the Terminator
+
+Version 0.8.7d
+- Fix broken minimap enable logic for menus
+- Fix nil error in startup conversion of old versions
+
+Version 0.8.7c
+- Fix incompatibility with version 1.11 and highlight text
+
+Version 0.8.7b
+- Clean up event handling some more (only listen when we're fishing)
+- Fix 'doubled' fishing location display for new fishing areas
+
+Version 0.8.7a
+- Hopefully fix an intermittent bug that crashes the client during
+  the Extravaganza when leaving Booty Bay
+- Stop losing the OutfitDisplayFrame outfit when logging out
+- Should correctly reset the Watcher Window for all toons
+- Add in 'FBEnEspagnol' for Spanish-speaking fisherbuddies
+- Use the now-builtin Outfitter 'find by stat' function
+
+Version 0.8.7
+- Integration with Gatherer (depends on the tooltip when you cast)
+- Add a 'hide these icky fish' menu to the watcher window
+- Put the keybinding for 'Suit Up and Go Fishing!' back in
+- Add an option to only fish from pools during the Extravaganza
+- Better (and more) French translation support from krogh
+- Rework debugging output so that people don't get surprised by it anymore
+- Rework zone and subzone storage to reduce space
+- Don't save default values (smaller saved vars, faster loading)
+- Tune event handling for faster world transitions
+- Move a lot of information into tooltips in the display window
+- Removed 'Fast Cast' again since patch 1.10.1 breaks it
+- Fix translation loader to actually work (even in English!)
+- Rewrite Extravaganza code and hopefully fix the crashes
+- Add an offset menu to handle differences between game and machine time
+- Fix the display bug when switching between locations and fishes
+- If more than one outfit switcher is available, allow a choice
+- Don't allow a recast if the fishing loot window is up
+- Add 'updatedb' command to link info for fish with missing data (can disconnect!)
+
 Version 0.8.6h
 - Fast Cast is back!
 
@@ -47,7 +132,7 @@ Version 0.8.5g
 - Include OutfitDisplayFrame fix for nil error when fewer than five bags
 
 Version 0.8.5f
-- Auto-set sound volumes to make the bobber sounds stand out
+- Auto-set sound volumes to make the bobber noise stand out (Good suggestion SBaL!)
 
 Version 0.8.5e
 - Don't count "Nat Pagle's Fish Terminator" as a fishing pole, even if it looks like one

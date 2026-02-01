@@ -41,12 +41,15 @@ end
 
 FishingBuddy.Minimap.Button_OnClick = function(button)
    if ( button == "RightButton" ) then
-      -- Toggle menu
-      local menu = getglobal("FishingBuddyMinimapMenu");
-      menu.point = "TOPRIGHT";
-      menu.relativePoint = "CENTER";
-      local level = 1;
-      ToggleDropDownMenu(level, nil, menu, "FishingBuddyMinimapButton", 0, 0);
+      if ( IsShiftKeyDown() ) then
+	 ToggleFishingBuddyFrame("FishingOptionsFrame");
+      else
+	 -- Toggle menu
+	 local menu = getglobal("FishingBuddyMinimapMenu");
+	 menu.point = "TOPRIGHT";
+	 menu.relativePoint = "CENTER";
+	 ToggleDropDownMenu(1, nil, menu, "FishingBuddyMinimapButton", 0, 0);
+      end
    elseif ( FishingBuddy.GetSetting("MinimapClickToSwitch") == 1 ) then
       FishingBuddy.Command(FishingBuddy.SWITCH);
    else
@@ -83,21 +86,22 @@ FishingBuddy.Minimap.Button_OnEvent = function()
 end
 
 FishingBuddy.Minimap.Button_OnEnter = function()
-   if ( GameTooltip.finished ) then
+   if ( GameTooltip.fbmmbfinished ) then
       return;
    end
    if ( FishingBuddy.GetSetting("UseButtonHole") == 0 ) then
-      GameTooltip.finished = 1;
+      GameTooltip.fbmmbfinished = 1;
       GameTooltip:SetOwner(FishingBuddyMinimapFrame, "ANCHOR_LEFT");
       GameTooltip:AddLine(FishingBuddy.NAME);
-      GameTooltip:AddLine(FishingBuddy.DESCRIPTION,.8,.8,.8,1);
+      local text = FishingBuddy.TooltipBody("MinimapClickToSwitch");
+      GameTooltip:AddLine(text,.8,.8,.8,1);
       GameTooltip:Show();
    end
 end
 
 FishingBuddy.Minimap.Button_OnLeave = function()
    GameTooltip:Hide();
-   GameTooltip.finished = nil;
+   GameTooltip.fbmmbfinished = nil;
 end
 
 function FishingBuddy_ToggleMinimap()
@@ -106,7 +110,7 @@ function FishingBuddy_ToggleMinimap()
 end
 
 FishingBuddy.Minimap.Menu_Initialize = function()
-   FishingBuddy.MakeDropDown(FishingBuddy.TITAN_CLICKTOSWITCH_ONOFF,
+   FishingBuddy.MakeDropDown(FishingBuddy.CLICKTOSWITCH_ONOFF,
 		"MinimapClickToSwitch");
 end
 

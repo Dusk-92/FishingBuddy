@@ -58,30 +58,6 @@
 				</Anchor>
 			</Anchors>
 		</NormalText>
-		<HighlightText name="$parentHighlightText" inherits="GameFontHighlight" justifyH="LEFT">
-			<Size>
-				<AbsDimension x="0" y="0"/>
-			</Size>
-			<Anchors>
-				<Anchor point="LEFT" relativeTo="$parentHighlight" relativePoint="RIGHT">
-					<Offset>
-						<AbsDimension x="2" y="1"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-		</HighlightText>
-		<DisabledText name="$parentDisabledText" inherits="GameFontDisable" justifyH="LEFT">
-			<Size>
-				<AbsDimension x="0" y="0"/>
-			</Size>
-			<Anchors>
-				<Anchor point="LEFT" relativeTo="$parentHighlight" relativePoint="RIGHT">
-					<Offset>
-						<AbsDimension x="2" y="1"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-		</DisabledText>
 	</Button>
 
 	<Button name="FishingLocationButtonTemplate" hidden="false" virtual="true">
@@ -136,30 +112,6 @@
 				</Anchor>
 			</Anchors>
 		</NormalText>
-		<HighlightText name="$parentHighlightText" inherits="GameFontHighlight" justifyH="LEFT">
-			<Size>
-				<AbsDimension x="0" y="0"/>
-			</Size>
-			<Anchors>
-				<Anchor point="LEFT" relativeTo="$parentHighlight" relativePoint="RIGHT">
-					<Offset>
-						<AbsDimension x="2" y="1"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-		</HighlightText>
-		<DisabledText name="$parentDisabledText" inherits="GameFontDisable" justifyH="LEFT">
-			<Size>
-				<AbsDimension x="0" y="0"/>
-			</Size>
-			<Anchors>
-				<Anchor point="LEFT" relativeTo="$parentHighlight" relativePoint="RIGHT">
-					<Offset>
-						<AbsDimension x="2" y="1"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-		</DisabledText>
 		<Frames>
 			<Button name="$parentIcon" hidden="true">
 				<Size>
@@ -181,7 +133,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				this:SetFrameLevel(this:GetFrameLevel() + 1);
+				this:RegisterForClicks("LeftButtonDown", "RightButtonUp");
 			</OnLoad>
 			<OnEnter>
 				FishingBuddy.Locations.Button_OnEnter();
@@ -252,6 +204,14 @@
 		    </Layer>
 		</Layers>
 		<Frames>
+			<Frame name="FishingBuddyLocationsMenu" inherits="UIDropDownMenuTemplate">
+				<Scripts>
+					<OnLoad>
+						this:SetFrameLevel(0);
+						UIDropDownMenu_SetWidth(180);
+					</OnLoad>
+				</Scripts>
+			</Frame>
 			<Button name="FishingLocationsSwitchButton" inherits="UIPanelButtonTemplate" text="" hidden="false">
 				<Size>
 					<AbsDimension x="160" y="21"/>
@@ -358,9 +318,9 @@
 				</Frames>
 			</Frame>
 
-			<ScrollFrame name="FishingLocsScrollFrame" inherits="FauxScrollFrameTemplate">
+			<ScrollFrame name="FishingLocsScrollFrame" hidden="false" inherits="FauxScrollFrameTemplate">
 				<Size>
-					<AbsDimension x="30" y="332"/>
+					<AbsDimension x="230" y="332"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT">
@@ -369,11 +329,6 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Scripts>
-					<OnVerticalScroll>
-						FauxScrollFrame_OnVerticalScroll(FishingBuddy.Locations.FRAME_THINGIEHEIGHT, FishingBuddy.Locations.Update);
-					</OnVerticalScroll>
-				</Scripts>
 				<Layers>
 					<Layer level="BACKGROUND">
 						<Texture name="FishingLocationsScrollBarTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
@@ -404,6 +359,12 @@
 						</Texture>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnVerticalScroll>
+						GameTooltip:Hide();
+						FauxScrollFrame_OnVerticalScroll(FishingBuddy.Locations.FRAME_THINGIEHEIGHT, FishingBuddy.Locations.Update);
+					</OnVerticalScroll>
+				</Scripts>
 			</ScrollFrame>
 
 			<Frame name="FishingLocationHighlightFrame" hidden="true">
@@ -422,7 +383,11 @@
 
 			<Button name="FishingLocations1" inherits="FishingLocationButtonTemplate" hidden="true" id="1">
 				<Anchors>
-					<Anchor point="TOPRIGHT" relativeTo="FishingLocsScrollFrame" relativePoint="TOPLEFT" />
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="25" y="-100"/>
+						</Offset>
+					</Anchor>
 				</Anchors>
 			</Button>
 			<Button name="FishingLocations2" inherits="FishingLocationButtonTemplate" hidden="true" id="2">

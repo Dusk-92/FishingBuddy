@@ -86,9 +86,9 @@
 			</CheckButton>
 			<CheckButton name="FishingBuddyOption_WatchOnlyWhenFishing" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_WatchCurrentSkill" relativePoint="BOTTOMLEFT">
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_WatchCurrentZone" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="0" y="2"/>
+							<AbsDimension x="140" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -104,7 +104,7 @@
 			</CheckButton>
 			<CheckButton name="FishingBuddyOption_SortByPercent" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_WatchFishPercent" relativePoint="BOTTOMLEFT">
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_WatchCurrentSkill" relativePoint="BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x="-16" y="2"/>
 						</Offset>
@@ -143,22 +143,13 @@
 				</Layers>
 			<Scripts>
 				<OnLoad>
-					FishingBuddy.OptionsFrame.MenuSetup("EasyCastKeys");
+					FishingBuddy.OptionsFrame.KeyMenuSetup("EasyCastKeys");
 				</OnLoad>
 			</Scripts>
 			</Frame>
-			<CheckButton name="FishingBuddyOption_FastCast" inherits="FishingBuddyCheckButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_EasyCast" relativePoint="BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x="16" y="2"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</CheckButton>
 			<CheckButton name="FishingBuddyOption_EasyLures" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_FastCast" relativePoint="BOTTOMLEFT">
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_EasyCast" relativePoint="BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x="0" y="2"/>
 						</Offset>
@@ -169,21 +160,57 @@
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_EasyLures" relativePoint="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="-16" y="2"/>
+							<AbsDimension x="0" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<Frame name="FishingBuddyOption_ClockOffset" inherits="UIDropDownMenuTemplate" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_STVTimer" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="210" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+					<FontString name="$parentLabel" inherits="GameFontNormalSmall">
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</FontString>
+				</Layer>
+				</Layers>
+			<Scripts>
+				<OnLoad>
+					FishingBuddy.OptionsFrame.OffsetMenuSetup();
+				</OnLoad>
+			</Scripts>
+			</Frame>
+			<CheckButton name="FishingBuddyOption_STVPoolsOnly" inherits="FishingBuddyCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_STVTimer" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="2"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 			</CheckButton>
 			<CheckButton name="FishingBuddyOption_EnhanceFishingSounds" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_STVTimer" relativePoint="BOTTOMLEFT">
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_STVPoolsOnly" relativePoint="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="0" y="2"/>
+							<AbsDimension x="-16" y="2"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 			</CheckButton>
-			<CheckButton name="FishingBuddyOption_UseButtonHole" inherits="FishingBuddyCheckButtonTemplate">
+			<CheckButton name="FishingBuddyOption_SuitUpFirst" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_EnhanceFishingSounds" relativePoint="BOTTOMLEFT">
 						<Offset>
@@ -192,15 +219,73 @@
 					</Anchor>
 				</Anchors>
 			</CheckButton>
-			<!-- Thanks to bc_TrackingMenu for this slider code -->
-			<Slider name="FishingBuddyMinimapPosSlider" inherits="OptionsSliderTemplate">
+			<CheckButton name="FishingBuddyOption_UseGatherer" inherits="FishingBuddyCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_SuitUpFirst" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="FishingBuddyOption_UseButtonHole" inherits="FishingBuddyCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_UseGatherer" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="140" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<Frame name="FishingBuddyOption_OutfitMenu" inherits="UIDropDownMenuTemplate" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_UseGatherer" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="48" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+					<FontString name="$parentLabel" inherits="GameFontNormalSmall">
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</FontString>
+				</Layer>
+				</Layers>
+			</Frame>
+		    	<SimpleHTML name="FishingBuddyOption_OutfitText">
 				<Size>
-					<AbsDimension x="290" y="17"/>
+					<AbsDimension x="210" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="FishingBuddyOption_UseGatherer" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<FontString name="$parentFontString" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="183" y="0"/>
+					</Size>
+				</FontString>
+			</SimpleHTML>
+			<!-- next option is relative to FishingBuddyOption_OutfitMenu -->
+			<!-- Thanks to bc_TrackingMenu for this slider code -->
+			<Slider name="FishingBuddyOption_MinimapPosSlider" inherits="OptionsSliderTemplate">
+				<Size>
+					<AbsDimension x="280" y="17"/>
 				</Size>
 				<Anchors>
 					<Anchor point="BOTTOM" relative="$parent" relativePoint="BOTTOM">
 						<Offset>
-							<AbsDimension x="-10" y="88"/>
+							<AbsDimension x="0" y="88"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -229,9 +314,9 @@
 			</Slider>
 			<CheckButton name="FishingBuddyOption_MinimapButtonVisible" inherits="FishingBuddyCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeTo="FishingBuddyMinimapPosSlider" relativePoint="TOPLEFT">
+					<Anchor point="TOPRIGHT" relativeTo="FishingBuddyOption_MinimapPosSlider" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="-4" y="16"/>
+							<AbsDimension x="-4" y="4"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

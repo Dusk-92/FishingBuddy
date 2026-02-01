@@ -49,7 +49,7 @@ Fishing Buddy
 
  and many, many others!
 
- Feel free to send comments to Sutorix on the Windrunner server.
+ Feel free to send comments to Sutorix=AT=hotmail.com.
 
 Installation
 ------------

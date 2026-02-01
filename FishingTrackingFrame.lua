@@ -13,21 +13,33 @@ local trackingWordMap = {
 
 local byhours = {
    [13759] = {
-      ["n"] = "Raw Nightfin Snapper",
+      ["enUS"] = "Raw Nightfin Snapper",
+	  ["ruRU"] = "Сырой ночной луциан",
+      ["deDE"] = "Roher Nachtflossenschnapper",
+      ["frFR"] = "Lutjan nagenuit cru",
       ["c"] = { r = 0.5, g = 0.5, b = 1.0, a = 0.75 },
    },
    [13760] = {
-      ["n"] = "Raw Sunscale Salmon",
-      ["c"] = { r = 0.8, g = 0.8, b = 0.1, a = 0.75 },
+      ["enUS"] = "Raw Sunscale Salmon",
+	  ["ruRU"] = "Сырой радужный лосось",
+      ["deDE"] = "Roher Sonnenschuppenlachs",
+      ["frFR"] = "Saumon sol\195\169caille cru",
+     ["c"] = { r = 0.8, g = 0.8, b = 0.1, a = 0.75 },
    },
 };
 local byweeks = {
    [13756] = {
-      ["n"] = "Raw Summer Bass",
+      ["enUS"] = "Raw Summer Bass",
+	  ["ruRU"] = "Сырой летний окунь",
+      ["deDE"] = "Roher Sommerbarsch",
+      ["frFR"] = "Perche estivale crue",
       ["c"] = { r = 1.0, g = 1.0, b = 0.0, a = 0.75 },
    },
    [13755] = {
-      ["n"] = "Winter Squid",
+      ["enUS"] = "Winter Squid",
+	  ["ruRU"] = "Зимний кальмар",
+      ["deDE"] = "Winterkalmar",
+      ["frFR"] = "Calmar hivernal",
       ["c"] = { r = 0.4, g = 0.1, b = 0.4, a = 0.75 },
    },
 };
@@ -75,6 +87,7 @@ local function TrackThis(how, id, color, name)
       FishingBuddy_Info["FishTracking"][how][id].color = color;
    end
 end
+FishingBuddy.TrackThis = TrackThis;
 
 FishingBuddy.Commands[FishingBuddy.TRACK] = {};
 FishingBuddy.Commands[FishingBuddy.TRACK].args = {};
@@ -146,6 +159,18 @@ end
 FishingBuddy.AddTracking = function(id, name)
    local ft = FishingBuddy_Info["FishTracking"];
    local index, how;
+
+   -- clean up fish removed from the tracking system
+   local hourly = ft["HOURLY"][id];
+   local weekly = ft["WEEKLY"][id];
+   if ( hourly and hourly.nevermore ) then
+      FishingBuddy_Info["FishTracking"]["HOURLY"][id] = nil;
+   end
+   if ( weekly and weekly.nevermore ) then
+      FishingBuddy_Info["FishTracking"]["WEEKLY"][id] = nil;
+   end
+
+   ft = FishingBuddy_Info["FishTracking"];
    if ( ft["HOURLY"][id] ) then
       how = "HOURLY";
       index,_ = GetGameTime();
@@ -166,33 +191,19 @@ FishingBuddy.AddTracking = function(id, name)
    return true;
 end
 
-local function PlotData(graph, num, bw, bs, tab, hlabels)
-   local plotem = {};
+local function PlotData(graph, num, bw, bs, graphdata, plotthese, hlabels)
    local maxval = 0;
    local width = 0;
-   local plotted = false;
-   local fdx = 1;
    local line;
-   local mv = 0;
-   for _,info in tab do
-      plotem[fdx] = false;
-      -- our data is zero based...
-      local n = table.getn(info.data);
-      width = n * (bw+bs);
-      n = n - 1;
-      for idx=0,n do
-	 if ( info.data[idx] > mv ) then
-	    mv = info.data[idx];
-	 end
+   GraphHandler.ClearPlot(graph);
+   for _,info in graphdata do
+      if ( info.maxval and info.maxval > maxval ) then
+	 maxval = info.maxval;
       end
-      if ( mv > 0 ) then
-	 if ( mv > maxval ) then
-	    maxval = mv;
-	 end
-	 plotem[fdx] = true;
-	 plotted = true;
+      local w = info.count * (bw+bs);
+      if ( w > width ) then
+	 width = w;
       end
-      fdx = fdx + 1;
    end
    local delta = math.mod(maxval, 5);
    if ( delta > 0 ) then
@@ -202,45 +213,175 @@ local function PlotData(graph, num, bw, bs, tab, hlabels)
    graph.barWidth = bw;
    graph.barSpacing = bs;
    local count = num;
-   fdx = 1;
-   for id, info in tab do
-      if ( count > 0 and plotem[fdx] ) then
-	 local c = info.color or {};
-	 local item, texture, _, _, _ = FishingBuddy.GetFishie(id);
-	 GraphHandler.PlotLegend(graph, num-count+1, info.name, id,
-				 texture, c.r, c.g, c.b);
-	 local w = GraphHandler.PlotData(graph, info.data, num-count, 1,
+   for idx,fishid in plotthese do
+      local info = graphdata[fishid];
+      local c = info.color;
+      GraphHandler.PlotLegend(graph, num-count+1,
+			      info.name, info.item, info.texture,
+			      c.r, c.g, c.b);
+      _ = GraphHandler.PlotData(graph, info.data, num-count, 1,
 					 c.r, c.g, c.b);
-     if ( info.name ) then
-        if ( line ) then
-	       line = line.." / "..info.name;
-	    else
-	       line = info.name;
-	    end
-	 end
-	 count = count - 1;
+      if ( line ) then
+         line = line.." / "..info.name;
+      else
+         line = info.name;
       end
-      fdx = fdx + 1;
+      count = count - 1;
    end
-   if ( plotted ) then
-      local values = {};
-      local delta = maxval/5;
-      for v=0,5 do
-	 values[string.format("%d", v*delta)] = v;
+   local values = {};
+   local delta = maxval/5;
+   for v=0,5 do
+      values[string.format("%d", v*delta)] = v;
+   end
+   GraphHandler.PlotGrid(graph, line or "", values, width, hlabels);
+end
+
+local function UpdateGraphData(id, info)
+   local maxval = 0;
+   local n = table.getn(info.data);
+   info.count = n;
+   -- we're zero based
+   n = n - 1;
+   for idx=0,n do
+      if ( info.data[idx] > maxval ) then
+         maxval = info.data[idx];
       end
-      GraphHandler.PlotGrid(graph, line or "", values, width, hlabels);
+   end
+   info.maxval = maxval;
+   info.data = info.data;
+   if ( not info.color ) then
+      info.color = {};
    else
-      GraphHandler.PlotGrid(graph, FishingBuddy.NODATAMSG );
+      if ( type(info.color) == "string") then
+         local a = tonumber(string.sub(color,1,2),16);
+         local r = tonumber(string.sub(color,3,4),16);
+         local g = tonumber(string.sub(color,5,6),16);
+         local b = tonumber(string.sub(color,7,8),16);
+         info.color = { a = a, r = r, g = g, b = b };
+      end
    end
-   return width, maxval, line;
+   local name;
+   info.item, info.texture, _, _, _, name = FishingBuddy.GetFishie(id);
+   local loc = GetLocale();
+   if ( not info.name ) then
+      if ( byhours[id] and byhours[id][loc] ) then
+         info.name = byhours[id][loc];
+      elseif ( byweeks[d] and byweeks[id][loc] ) then
+         info.name = byweeks[id][loc];
+      elseif ( not name ) then
+         info.name = FishingBuddy.FISH.." ("..id..")";
+      else
+         info.name = name;
+      end
+   end
+   info.name = FishingBuddy.StripRaw(info.name);
+end
+
+local function DrawTrackingGraph(how, num, bw, bs)
+   local fi = FishingBuddy_Info["FishTracking"];
+   local graph;
+   local labels;
+   if ( how == "HOURLY" ) then
+      graph = getglobal("FishingTrackingFrameGraph1");
+      labels = {["00:00"] = 0, ["06:00"] = 6, ["12:00"] = 12, ["18:00"] = 18, ["23:59"] = 24};
+      if ( not num ) then
+         num = 2;
+         bw = 5;
+         bs = 5;
+      end
+   else
+      graph = getglobal("FishingTrackingFrameGraph2");
+      labels = FishingBuddy.BYWEEKS_TABLE;
+      if ( not num ) then
+         num = 2;
+         bw = 3;
+         bs = 2;
+      end
+   end
+   local plotthese = {};
+   local count = 0;
+   graph.tracking = how;
+   for id,info in fi[how] do
+      UpdateGraphData(id, info);
+      if ( count < num and fi[how][id].plot == 1 ) then
+         count = count + 1;
+         tinsert(plotthese, id);
+      end
+   end
+   PlotData(graph, num, bw, bs, fi[how], plotthese, labels);
+end
+
+local function DrawTrackingGraphs()
+   DrawTrackingGraph("HOURLY");
+   DrawTrackingGraph("WEEKLY");
+end
+
+local function PlotFishToggle(fishid, how)
+   local tab = FishingBuddy_Info["FishTracking"][how];
+   if ( not tab[fishid].plot ) then
+      tab[fishid].plot = 1;
+   else
+      tab[fishid].plot = 1 - tab[fishid].plot;
+   end
+   DrawTrackingGraph(how);
+end
+
+local PlotToggleFunctions = {};
+local function PlotMakeToggle(fishid, how)
+   if ( not PlotToggleFunctions[fishid] ) then
+      local id = fishid;
+      local h = how;
+      PlotToggleFunctions[fishid] = function() PlotFishToggle(id, h); end;
+   end
+   return PlotToggleFunctions[fishid];
+end
+
+local function PlotMenuInitialize()
+   local fi = FishingBuddy_Info["FishTracking"];
+   local ff = FishingBuddy_Info["Fishies"];
+   local how = this.tracking;
+   local locale = GetLocale();
+   for id,_ in fi[how] do
+      if ( not fi[how][id].plot ) then
+         fi[how][id].plot = 1;
+      end
+      info = {};
+      if ( ff[id] and ff[id].name ) then
+	 info.text = ff[id].name;
+      elseif ( byhours[id] ) then
+	 info.text = byhours[id][locale];
+      elseif ( byweeks[id] ) then
+	 info.text = byweeks[id][locale];
+      end
+      if ( info.text ) then
+	 info.func = PlotMakeToggle(id, how);
+	 info.checked = ( fi[how][id].plot == 1 );
+	 UIDropDownMenu_AddButton(info);
+      end
+   end
+end
+
+FishingBuddy.TrackingFrame.OnClick = function(button, graph)
+   if ( button == "RightButton" ) then
+      local menu = getglobal("FishingBuddyGraphMenu");
+      menu.tracking = this.tracking;
+      menu.point = "CENTER";
+      menu.relativePoint = "CENTER";
+      UIDropDownMenu_Initialize(menu, PlotMenuInitialize, "MENU");
+      FishingBuddy.ToggleDropDownMenu(1, nil, menu, this, 0, 0);
+   end
 end
 
 FishingBuddy.TrackingFrame.OnShow = function()
-   local fi = FishingBuddy_Info["FishTracking"];
-   local graph1 = getglobal("FishingTrackingFrameGraph1");
-   local graph2 = getglobal("FishingTrackingFrameGraph2");
-
-   PlotData(graph1, 2, 5, 5, fi["HOURLY"],
-	    {["00:00"] = 0, ["06:00"] = 6, ["12:00"] = 12, ["18:00"] = 18, ["23:59"] = 24});
-   PlotData(graph2, 2, 3, 2, fi["WEEKLY"], FishingBuddy.BYWEEKS_TABLE);
+   DrawTrackingGraphs();
 end
+
+FishingBuddy.TrackingFrame.OnEnter = function()
+   GameTooltip_AddNewbieTip(FishingBuddy.TRACKINGFRAME, 1.0, 1.0, 1.0, 
+      FishingBuddy.TRACKINGFRAME_CLICKS, 1);
+end
+
+FishingBuddy.TrackingFrame.OnLeave = function()
+   GameTooltip:Hide();
+end
+

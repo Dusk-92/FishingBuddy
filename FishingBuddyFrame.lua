@@ -1,28 +1,28 @@
 local SUBFRAMES = {
-	["FishingLocationsFrame"] = {
-	   ["name"] = FishingBuddy.LOCATIONS_TAB,
-	   ["tooltip"] = FishingBuddy.LOCATIONS_INFO,
-	   ["toggle"] = "_LOC",
-	   ["id"] = "1",
-	},
-	["FishingOutfitFrame"] = {
-	   ["name"] = FishingBuddy.OUTFITS_TAB,
-	   ["tooltip"] = FishingBuddy.OUTFITS_INFO,
-	   ["toggle"] = "_OUT",
-	   ["id"] = "2",
-	},
-	["FishingTrackingFrame"] = {
-	   ["name"] = FishingBuddy.TRACKING_TAB,
-	   ["tooltip"] = FishingBuddy.TRACKING_INFO,
-	   ["toggle"] = "_TRK",
-	   ["id"] = "3",
-	},
-	["FishingOptionsFrame"] = {
-	   ["name"] = FishingBuddy.OPTIONS_TAB,
-	   ["tooltip"] = FishingBuddy.OPTIONS_INFO,
-	   ["toggle"] = "_OPT",
-	   ["id"] = "4",
-	}
+   ["FishingLocationsFrame"] = {
+      ["name"] = FishingBuddy.LOCATIONS_TAB,
+      ["tooltip"] = FishingBuddy.LOCATIONS_INFO,
+      ["toggle"] = "_LOC",
+      ["id"] = "1",
+   },
+   ["FishingOutfitFrame"] = {
+      ["name"] = FishingBuddy.OUTFITS_TAB,
+      ["tooltip"] = FishingBuddy.OUTFITS_INFO,
+      ["toggle"] = "_OUT",
+      ["id"] = "2",
+   },
+   ["FishingTrackingFrame"] = {
+      ["name"] = FishingBuddy.TRACKING_TAB,
+      ["tooltip"] = FishingBuddy.TRACKING_INFO,
+      ["toggle"] = "_TRK",
+      ["id"] = "3",
+   },
+   ["FishingOptionsFrame"] = {
+      ["name"] = FishingBuddy.OPTIONS_TAB,
+      ["tooltip"] = FishingBuddy.OPTIONS_INFO,
+      ["toggle"] = "_OPT",
+      ["id"] = "4",
+   }
 };
 
 local function DisableSubFrame(frameName)
@@ -33,16 +33,33 @@ local function DisableSubFrame(frameName)
 	 local f = getglobal(hideframe);
 	 if ( f ) then
 	    f:Hide();
-	 end
-	 id = id + 1;
-	 f = getglobal("FishingBuddyFrameTab"..id);
-	 if ( f ) then
-	    f:SetPoint("LEFT", hideframe, "LEFT", 0, 0)
+	    f = getglobal(string.format("FishingBuddyFrameTab%d", id+1));
+	    if ( f ) then
+	       f:SetPoint("LEFT", hideframe, "LEFT", 0, 0)
+	    end
 	 end
       end
    end
 end
 FishingBuddy.DisableSubFrame = DisableSubFrame;
+
+local function EnableSubFrame(frameName)
+   for value,info in SUBFRAMES do 
+      if ( value == frameName ) then
+	 local id = info.id;
+	 local hideframe = string.format("FishingBuddyFrameTab%d", id);
+	 local f = getglobal(hideframe);
+	 if ( f ) then
+	    f:Show();
+	    f = getglobal(string.format("FishingBuddyFrameTab%d", id+1));
+	    if ( f ) then
+	       f:SetPoint("LEFT", hideframe, "RIGHT", -18, 0)
+	    end
+	 end
+      end
+   end
+end
+FishingBuddy.EnableSubFrame = EnableSubFrame;
 
 local function ShowSubFrame(frameName)
    for value,_ in SUBFRAMES do 
@@ -115,17 +132,16 @@ function FishingBuddyFrame_OnEvent(event)
 	    DisableSubFrame(frame);
 	 end
       end
-      ToggleFishingBuddyFrame("FishingLocationsFrame");
-      ToggleFishingBuddyFrame("FishingLocationsFrame");
+      ShowSubFrame("FishingLocationsFrame");
    end
 end
 
 function FishingBuddyFrame_OnShow()
-	FishingBuddyFramePortrait:SetTexture("Interface\\LootFrame\\FishingLoot-Icon");
-	FishingBuddyNameText:SetText(FishingBuddy.WINDOW_TITLE);
-	UpdateMicroButtons();
+   FishingBuddyFramePortrait:SetTexture("Interface\\LootFrame\\FishingLoot-Icon");
+   FishingBuddyNameText:SetText(FishingBuddy.WINDOW_TITLE);
+   UpdateMicroButtons();
 end
 
 function FishingBuddyFrame_OnHide()
-	UpdateMicroButtons();
+   UpdateMicroButtons();
 end

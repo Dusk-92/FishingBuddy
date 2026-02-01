@@ -17,7 +17,7 @@
 				GameTooltip:Hide();
 			</OnLeave>
 		</Scripts>
-		<NormalTexture name="$parentTexture" file="Interface\AddOns\FishingBuddy\Icons\minimaptargetgreen"/>
+		<NormalTexture name="$parentTexture"/>
 	</Button>
 	<Button name="FishingExtravaganzaMini1" inherits="FishingExtravaganzaMiniTemplate" id="1" hidden="false" parent="Minimap" toplevel="true"/>
 	<Button name="FishingExtravaganzaMini2" inherits="FishingExtravaganzaMiniTemplate" id="2" hidden="false" parent="Minimap" toplevel="true"/>
@@ -94,6 +94,9 @@
 	            <OnLoad>
 	               FishingBuddy.Extravaganza.OnLoad();
 	            </OnLoad>
+	            <OnShow>
+	               FishingBuddy.Extravaganza.OnShow();
+	            </OnShow>
 	            <OnEvent>
 	            	FishingBuddy.Extravaganza.OnEvent();
 	            </OnEvent>
@@ -102,5 +105,12 @@
 	            </OnUpdate>
 	        </Scripts>
 	</Frame>
-	
+
+	<Frame name="FishingExtravaganzaPOIUpdate" hidden="true">
+		<Scripts>
+	            <OnUpdate>
+	            	FishingBuddy.Extravaganza.POI_OnUpdate(arg1);
+	            </OnUpdate>
+		</Scripts>
+	</Frame>	
 </Ui>

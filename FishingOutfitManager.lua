@@ -32,6 +32,24 @@ local Accessories = {
    [5310] = { ["n"] = "Sea Dog Britches", ["score"] = 4, },
 }
 
+FishingBuddy.Commands[FishingBuddy.SWITCH] = {};
+FishingBuddy.Commands[FishingBuddy.SWITCH].func = function()
+					FishingBuddy.OutfitManager.Switch();
+					return true;
+				     end;
+
+local OutfitManagers = {};
+local OutfitManagerCount = 0;
+FishingBuddy.OutfitManager.RegisterManager = function(name, init, choose, switch)
+   if ( not OutfitManagers[name] ) then
+      OutfitManagers[name] = {};
+      OutfitManagerCount = OutfitManagerCount + 1;
+   end
+   OutfitManagers[name].Initialize = init;
+   OutfitManagers[name].Choose = choose;
+   OutfitManagers[name].Switch = switch;
+end
+
 FishingBuddy.OutfitManager.ItemStylePoints = function(itemno, enchant)
    local points = 0;
    if ( itemno ) then
@@ -48,145 +66,119 @@ FishingBuddy.OutfitManager.ItemStylePoints = function(itemno, enchant)
    return points;
 end
 
-local CheckSwitch = nil;
+local PoleCheck = nil;
 
 -- update the watcher when we're done switching outfits
 FishingBuddy.OutfitManager.WaitForUpdate =
    function(arg1)
-      local hasPole = FishingBuddy.IsFishingPole();
-      if ( hasPole == CheckSwitch ) then
+      local hasPole = FishingBuddy.API.IsFishingPole();
+      if ( hasPole == PoleCheck ) then
 	 FishingOutfitUpdateFrame:Hide();
-	 FishingBuddy.FishingMode();
+	 FishingBuddy.API.FishingMode();
       end
    end
 
-FishingBuddy.OutfitManager.CheckSwitch = function(topole)
-   CheckSwitch = topole;
+local function CheckSwitch(topole)
+   PoleCheck = topole;
    FishingOutfitUpdateFrame:Show();
 end
+FishingBuddy.OutfitManager.CheckSwitch = CheckSwitch;
+
+local function HasManager()
+   return (OutfitManagerCount > 0);
+end
+FishingBuddy.OutfitManager.HasManager = HasManager;
 
 FishingBuddy.OutfitManager.Switch = function(outfitname)
-   if ( OutfitDisplayFrame_OnLoad ) then
-      FishingBuddy.OutfitFrame.Switch();
-   else
-      local vOut, vCat, vInd = Outfitter_FindOutfitByStatId(Outfitter_cFishingStatName);
-      if ( vOut ) then
-	 if ( FishingBuddy.IsFishingPole() ) then
-	    Outfitter_RemoveOutfit(vOut);
-	    FishingBuddy.OutfitManager.CheckSwitch(false);
-	 else
-	    vOut.Disabled = nil;
-	    Outfitter_WearOutfit(vOut, vCat);
-	    FishingBuddy.OutfitManager.CheckSwitch(true);
-	 end
-	 Outfitter_Update(true);
+   if ( HasManager() ) then
+      local outfitter = FishingBuddy.GetSetting("OutfitManager");
+      if ( outfitter and OutfitManagers[outfitter] ) then
+         local wasPole = OutfitManagers[outfitter].Switch(outfitname);
+         CheckSwitch(not wasPole);
       end
+   else
+      FishingBuddy.UIError(FishingBuddy.COMPATIBLE_SWITCHER);
    end
    -- if we're now sporting a fishing pole, let's go fishing
-   FishingBuddy.FishingMode();
+   FishingBuddy.API.FishingMode();
 end
 
-FishingBuddy.OutfitManager.HasManager = function()
-   return ( OutfitDisplayFrame_OnLoad or Outfitter_OnLoad );
+local current_manager;
+
+local function OutfitManagerMenuSetup()
+   for manager,_ in OutfitManagers do
+      local mgr = manager;
+      local info = {};
+      info.text = manager;
+      info.func = function() FishingBuddy.OutfitManager.ChooseManager(mgr); end;
+      info.checked = ( current_manager == manager )
+      UIDropDownMenu_AddButton(info);
+   end
 end
+
+local function SetOutfitManagerDisplay()
+   if ( OutfitManagerCount == 0 ) then
+      FishingBuddyOption_OutfitMenu:Hide();
+      FishingBuddyOption_OutfitText:SetText(FishingBuddy.OUTFITS_TAB..": |c"..FishingBuddy.Colors.RED..FishingBuddy.NONEAVAILABLE_MSG.."|r");
+   elseif ( OutfitManagerCount == 1 ) then
+      FishingBuddyOption_OutfitMenu:Hide();
+      FishingBuddyOption_OutfitText:SetText(FishingBuddy.OUTFITS_TAB..": |c"..FishingBuddy.Colors.GREEN..current_manager.."|r");
+   else
+      FishingBuddyOption_OutfitText:Hide();
+      UIDropDownMenu_Initialize(FishingBuddyOption_OutfitMenu,
+				OutfitManagerMenuSetup);
+      local show = 1;
+      for name,_ in OutfitManagers do
+	 if ( name == current_manager ) then
+	    break;
+	 end
+	 show = show + 1;
+      end
+      local label = getglobal("FishingBuddyOption_OutfitMenuLabel");
+      label:SetText(FishingBuddy.OUTFITS_TAB..": ");
+      local menu = FishingBuddyOption_OutfitMenu;
+      UIDropDownMenu_SetWidth(210, menu);
+      UIDropDownMenu_SetSelectedValue(menu, show);
+      UIDropDownMenu_SetText(current_manager, menu);
+   end
+end
+
+local function ChooseManager(manager)
+   if ( manager and OutfitManagers[manager] ) then
+      current_manager = manager;
+      if ( not OutfitManagers[manager].initialized ) then
+         OutfitManagers[manager].Initialize();
+         OutfitManagers[manager].initialized = 1;
+      end
+      for om,info in OutfitManagers do
+	 info.Choose(om == manager);
+      end
+      SetOutfitManagerDisplay();
+      return true;
+   end
+end
+FishingBuddy.OutfitManager.ChooseManager = ChooseManager;
 
 FishingBuddy.OutfitManager.Initialize = function()
    -- no outfit managers, no outfit switching
-   if ( not FishingBuddy.OutfitManager.HasManager() ) then
+   if ( not HasManager() ) then
       FishingBuddy.SetSetting("InfoBarClickToSwitch", 0);
       FishingBuddy.SetSetting("TitanClickToSwitch", 0);
       FishingBuddy.SetSetting("MinimapClickToSwitch", 0);
-   end
-   if ( (not OutfitDisplayFrame_OnLoad) and Outfitter_OnLoad ) then
-      -- create the default fishing outfit, if it doesn't exist
-      if ( gOutfitter_Settings ) then
-	 local vOut, vCat, vInd = Outfitter_FindOutfitByStatId(Outfitter_cFishingStatName);
-	 local vName = "Fishing Buddy";
-	 if ( not vOut ) then
-	    vOut = Outfitter_GenerateSmartOutfit(vName, Outfitter_cFishingStatName, OutfitterItemList_GetEquippableItems(true));
-	    if not vOut then
-	       vOut = Outfitter_NewEmptyOutfit(vName);
-	    end
-	    
-	    local vCategoryID = Outfitter_AddOutfit(vOut);
+   else
+      if ( OutfitManagerCount == 1 ) then
+	 -- we pretty much have to use this one
+	 current_manager = next(OutfitManagers);
+      else
+	 current_manager = FishingBuddy.GetSetting("OutfitManager");
+	 if ( not manager or not OutfitManagers[manager] ) then
+	    -- no valid ones, use the first one
+	    current_manager = next(OutfitManagers);
 	 end
       end
+      ChooseManager(current_manager);
+      -- in case we changed things (do we want/need to do this?)
+      -- FishingBuddy.SetSetting("OutfitManager", current_manager);
    end
+   SetOutfitManagerDisplay();
 end
-
--- calculate scores based on Outfitter
-local function StylePoints(outfit)
-   local isp = FishingBuddy.OutfitManager.ItemStylePoints;
-   local points = 0;
-   if ( outfit )then
-      for slot in outfit.Items do
-	 points = points + isp(outfit.Items[slot].Code,
-			       outfit.Items[slot].EnchantCode);
-      end
-   end
-   return points;
-end
-
-local function BonusPoints(outfit, vStatID)
-   local points = 0;
-   if ( outfit )then
-      for slot in outfit.Items do
-	 if ( outfit.Items[slot][vStatID] ) then
-	    points = points + outfit.Items[slot][vStatID];
-	 end
-	 -- Enternium Fishing Line
-	 if ( outfit.Items[slot].EnchantCode == 2603 ) then
-	    points = points + 5;
-	 end
-      end
-   end
-   return points;
-end
-
--- Outfitter patches
-
-function Outfitter_FindOutfitByStatId(pStatID)
-   if not pStatID or pStatID == "" then
-      return nil;
-   end
-
-   for vCategoryID, vOutfits in gOutfitter_Settings.Outfits do
-      for vOutfitIndex, vOutfit in vOutfits do
-	 if vOutfit.StatID and vOutfit.StatID == pStatID then
-	    return vOutfit, vCategoryID, vOutfitIndex;
-	 end
-      end
-   end
-
-   -- return nil, nil, nil;
-end
-
-local Saved_OutfitterItem_OnEnter = OutfitterItem_OnEnter;
-FishingBuddy.OutfitManager.OutfitterItem_OnEnter = function(pItem)
-   Saved_OutfitterItem_OnEnter(pItem);
-   if ( not pItem.isCategoryItem ) then
-      local vOutfit = Outfitter_GetOutfitFromListItem(pItem);
-      if ( vOutfit and vOutfit.StatID == Outfitter_cFishingStatName ) then
-	 local vDescription;
-	 local bp = BonusPoints(vOutfit, Outfitter_cFishingStatName);
-	 if ( bp >= 0 ) then
-	    bp = "+"..bp;
-	 else
-	    bp = 0 - bp;
-	    bp = "-"..bp;
-	 end
-	 bp = Outfitter_cFishingStatName.." "..bp;
-	 local sp = StylePoints(vOutfit);
-	 local pstring;
-	 if ( points == 1 ) then
-	    pstring = FishingBuddy.POINT;
-	 else
-	    pstring = FishingBuddy.POINTS;
-	 end
-	 vDescription = string.format(FishingBuddy.CONFIG_OUTFITTER_TEXT,
-				      bp, sp)..pstring;
-	 GameTooltip_AddNewbieTip(vOutfit.Name, 1.0, 1.0, 1.0, vDescription, 1);
-      end
-   end
-end
-OutfitterItem_OnEnter = FishingBuddy.OutfitManager.OutfitterItem_OnEnter;

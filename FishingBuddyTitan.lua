@@ -42,19 +42,13 @@ FishingBuddy.Titan.OnEvent = function()
 end
 
 function TitanPanelFishingBuddyButton_GetTooltipText()
-   local text = FishingBuddy.DESCRIPTION1.."\n"..FishingBuddy.DESCRIPTION2.."\n";
-   if (FishingBuddy.GetSetting("TitanClickToSwitch") == 1) then
-      text = text..TitanUtils_GetGreenText(FishingBuddy.TOOLTIP_HINTSWITCH);
-   else
-      text = text..TitanUtils_GetGreenText(FishingBuddy.TOOLTIP_HINTTOGGLE);
-   end
-   return text;
+   return FishingBuddy.TooltipBody("TitanClickToSwitch");
 end
 
 function TitanPanelRightClickMenu_PrepareFishingBuddyMenu()
    TitanPanelRightClickMenu_AddTitle(TitanPlugins[FishingBuddy.ID].menuText);
 
-   FishingBuddy.MakeDropDown(FishingBuddy.TITAN_CLICKTOSWITCH_ONOFF, "TitanClickToSwitch");
+   FishingBuddy.MakeDropDown(FishingBuddy.CLICKTOSWITCH_ONOFF, "TitanClickToSwitch");
 
    TitanPanelRightClickMenu_AddSpacer();	
    TitanPanelRightClickMenu_AddCommand(TITAN_PANEL_MENU_HIDE,

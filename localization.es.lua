@@ -1,7 +1,7 @@
 FishingTranslations["esES"] = {
    NAME = "Fishing Buddy",
    DESCRIPTION1 = "Seguimiento de las capturas que has hecho",
-   DESCRIPTION2 = "y maneja tu caña de pescar.",
+   DESCRIPTION2 = "y maneja tu ca\195\177a de pescar.",
 
    -- Tab labels and tooltips
    LOCATIONS_INFO = "Muestra info de zona de pesca",
@@ -10,7 +10,7 @@ FishingTranslations["esES"] = {
    OUTFITS_TAB = "Equipos",
    OPTIONS_INFO = "Establece #NAME# opciones",
    OPTIONS_TAB = "Opciones",
-   TRACKING_INFO = "Muestra #NAME# informacióon de pesca ciclica",
+   TRACKING_INFO = "Muestra #NAME# informaci\195\179on de pesca ciclica",
    TRACKING_TAB = "Seguimiento",
 
    POINT = "punto",
@@ -28,7 +28,9 @@ FishingTranslations["esES"] = {
    NOTRACK = "no siguas",
    TRACKING = "siguiendo",
 
-   ADD = "añde",
+   OIL_SPILL = "Perdita de Petro'leo",
+
+   ADD = "a\195\177de",
    REPLACE = "reemplaza",
    UPDATE = "actualiza",
    CURRENT = "actual",
@@ -64,55 +66,54 @@ FishingTranslations["esES"] = {
 
    -- Option names and tooltips
    CONFIG_SHOWNEWFISHIES_ONOFF = "Muestra nuevos peces",
-   CONFIG_SHOWNEWFISHIES_INFO  = "Muestra un mensaje en el chat cuando la captura es nueva en el área actual.",
+   CONFIG_SHOWNEWFISHIES_INFO  = "Muestra un mensaje en el chat cuando la captura es nueva en el \195\161rea actual.",
    CONFIG_FISHWATCH_ONOFF      = "Observador",
-   CONFIG_FISHWATCH_INFO	 	 = "Muestra un texto con la captura en el área actual.",
+   CONFIG_FISHWATCH_INFO	 	 = "Muestra un texto con la captura en el \195\161rea actual.",
    CONFIG_FISHWATCHSKILL_ONOFF      = "Muestra habilidad actual",
-   CONFIG_FISHWATCHSKILL_INFO	= "Muestra habilidad y mods en el área de observación.",
+   CONFIG_FISHWATCHSKILL_INFO	= "Muestra habilidad y mods en el \195\161rea de observaci\195\179n.",
    CONFIG_FISHWATCHZONE_ONOFF      = "Muestra zona actual",
-   CONFIG_FISHWATCHZONE_INFO	= "Muestra zona actual en el área de observación.",
+   CONFIG_FISHWATCHZONE_INFO	= "Muestra zona actual en el \195\161rea de observaci\195\179n.",
    CONFIG_FISHWATCHONLY_ONOFF   = "Solo cuando pescas",
    CONFIG_FISHWATCHONLY_INFO	 = "Solo muestra capturas en el observador si estas pescando actualmente",
    CONFIG_FISHWATCHPERCENT_ONOFF   = "Muestra porcentaje capturado",
    CONFIG_FISHWATCHPERCENT_INFO	 = "Muestra el porcentaje de cada tipo de pez en el observador",
-   CONFIG_EASYLURES_ONOFF		 = "Señuelo facil",
-   CONFIG_EASYLURES_INFO		 = "Si activado, se aplicará un señuelo a tu caña antes de empezar a pescar siempre que lo necesites.",
-   CONFIG_ONLYMINE_ONOFF		 = "Equipa solo caña",
-   CONFIG_ONLYMINE_INFO		 = "Si activado, captura facil solo cequeará si llevas la caña (p.ej. no buscará todas las posibilidades).",
+   CONFIG_EASYLURES_ONOFF		 = "Se\195\177uelo facil",
+   CONFIG_EASYLURES_INFO		 = "Si activado, se aplicar\195\161 un se\195\177uelo a tu ca\195\177a antes de empezar a pescar siempre que lo necesites.",
+   CONFIG_ONLYMINE_ONOFF		 = "Equipa solo ca\195\177a",
+   CONFIG_ONLYMINE_INFO		 = "Si activado, captura facil solo cequear\195\161 si llevas la ca\195\177a (p.ej. no buscar\195\161 todas las posibilidades).",
    CONFIG_SHOWLOCATIONZONES_ONOFF	= "Muestra zonas",
    CONFIG_SHOWLOCATIONZONES_INFO	= "Muestra zonas y subzonas.",
-   CONFIG_SORTBYPERCENT_ONOFF	= "Por número de capturas",
-   CONFIG_SORTBYPERCENT_INFO	= "Ordena la pantalla con el número de peces capturadas y no por el nombre.",
+   CONFIG_SORTBYPERCENT_ONOFF	= "Por n\195\186mero de capturas",
+   CONFIG_SORTBYPERCENT_INFO	= "Ordena la pantalla con el n\195\186mero de peces capturadas y no por el nombre.",
    CONFIG_STVTIMER_ONOFF		= "Marcador de Fishing Extravaganza",
    CONFIG_STVTIMER_INFO		= "Si activado, muestra la cuenta atras para el comienzo de Fishing Extravaganza y muestra el tiempo restante.",
    CONFIG_USEBUTTONHOLE_ONOFF	= "Usa ButtonHole",
-   CONFIG_USEBUTTONHOLE_INFO	= "Si activo, al addon ButtonHole controlará el botón del minimapa. Hace efecto al siguiente login.",
+   CONFIG_USEBUTTONHOLE_INFO	= "Si activo, al addon ButtonHole controlar\195\161 el bot\195\179n del minimapa. Hace efecto al siguiente login.",
 
    CONFIG_SKILL_INFO		= "Bonus de equipo total.",
    CONFIG_SKILL_TEXT		= "Pescando ",
-   CONFIG_STYLISH_INFO		= "Style points loosely inspired by Draznar's Fishing FAQ in the WoW forums.",
    CONFIG_STYLISH_TEXT		= "Estilo: ",
 
    CONFIG_OUTFITTER_TEXT      = "Bonus equipo habilidad: %s\r\nPuntuacion estilo Draznar's: %d ";
 
-   TITAN_CLICKTOSWITCH_ONOFF	= "Click para cambiar",
-   TITAN_CLICKTOSWITCH_INFO	= "Si activado, click-izq. Cambia equipos, sino saltarála ventana Fishing Buddy.",
+   CLICKTOSWITCH_ONOFF	= "Click para cambiar",
+   CLICKTOSWITCH_INFO	= "Si activado, click-izq. Cambia equipos, sino saltar\195\161la ventana Fishing Buddy.",
 
    LEFTCLICKTODRAG = "Click-izq para mover",
 
-   MINIMAPBUTTONPLACEMENT = "Posición Botón",
+   MINIMAPBUTTONPLACEMENT = "Posici\195\179n Bot\195\179n",
    MINIMAPBUTTONPLACEMENTTOOLTIP = "Permite mover el #NAME# icono alrdedor del  minimapa",
    CONFIG_MINIMAPBUTTON_ONOFF	= "Muestra icono minimapa",
    CONFIG_MINIMAPBUTTON_INFO	= "Muestra un #NAME# icono en el minimapa.",
 
    CONFIG_ENHANCESOUNDS_ONOFF      = "Activa sonidos de pesca",
-   CONFIG_ENHANCESOUNDS_INFO       = "Maximiza el volúmen y minimiza el volúmen del ambiente para que se aprecie mejor el sonido cuando se pesca.",
+   CONFIG_ENHANCESOUNDS_INFO       = "Maximiza el vol\195\186men y minimiza el vol\195\186men del ambiente para que se aprecie mejor el sonido cuando se pesca.",
 
    -- messages
-   FAILEDINIT = "No inicializó correctamente.",
+   FAILEDINIT = "No inicializ\195\179 correctamente.",
    IMPORTMSG = "BaseDatos '%s' importada.",
    NOIMPORTMSG = "No Impp, DataFish, o FishInfo2 BasesDatos encontradas.",
-   ADDFISHIEMSG = "Añdiendo %s a zona %s.",
+   ADDFISHIEMSG = "A\195\177diendo %s a zona %s.",
    CURSORBUSYMSG = "no pudo cambiar por estar el cursor ocupado!",
    NOOUTFITDEFINED = "No tienes objetos en tu equipo de pesca.",
    NODATAMSG = "No datos pesca disponibles.",
@@ -121,77 +122,21 @@ FishingTranslations["esES"] = {
    NOTRACKMSG = "Pesca ciclica borrada '%s'.",
    POLEALREADYEQUIPPED = "Ya estas equipado para pescar.",
    CANTSWITCHBACK = "Ya te has quitado el equipamiento de pesca.",
-   CLEANUP_NONEMSG = "No quedan antigÜos ajustes.",
-   CLEANUP_WILLMSG = "Ajustes antigÜos quedan para |c0000FF00%s|r: %s.",
-   CLEANUP_DONEMSG = "Borrados ajustes antigÜos para |c0000FF00%s|r: %s.",
-   CLEANUP_NOOLDMSG = "No hay ajustes antigÜos para jugador |c0000FF00%s|r.",
+   CLEANUP_NONEMSG = "No quedan antig\195\186os ajustes.",
+   CLEANUP_WILLMSG = "Ajustes antig\195\186os quedan para |c#GREEN#%s|r: %s.",
+   CLEANUP_DONEMSG = "Borrados ajustes antig\195\186os para |c#GREEN#%s|r: %s.",
+   CLEANUP_NOOLDMSG = "No hay ajustes antig\195\186os para jugador |c#GREEN#%s|r.",
 
    NOTLINKABLE = "<Objeto no se puede alcanzar>",
 
    TIMETOGO = "Extravaganza comienza en %d:%02d",
-   TIMELEFT = "Extravaganza acaba en %d:%02d -- %d %s",
+   TIMELEFT = "Extravaganza acaba en %d:%02d",
 
    STVZONENAME = "Stranglethorn Vale",
 
-   TOOLTIP_HINTSWITCH = "Consejo: click para cambiar equipos",
-   TOOLTIP_HINTTOGGLE = "Consejo: click para mostar #NAME# ventana.",
-
-   -- Key binding support
-   BINDING_HEADER_FISHINGBUDDY_BINDINGS = "#NAME#",
-   BINDING_NAME_FISHINGBUDDY_TOGGLE = "Toggle #NAME# Window",
-   BINDING_NAME_FISHINGBUDDY_SWITCH = "Switch Fishing Outfit",
-   BINDING_NAME_FISHINGBUDDY_GOFISHING = "Suit up and go fishing",
-
-   BINDING_NAME_TOGGLEFISHINGBUDDY_LOC = "Toggle #NAME# Locations Pane",
-   BINDING_NAME_TOGGLEFISHINGBUDDY_OUT = "Toggle #NAME# Outfit Pane",
-   BINDING_NAME_TOGGLEFISHINGBUDDY_TRK = "Toggle #NAME# Tracking Pane",
-   BINDING_NAME_TOGGLEFISHINGBUDDY_OPT = "Toggle #NAME# Options Pane",
+   TOOLTIP_HINT = "Consejo:",
+   TOOLTIP_HINTSWITCH = "click para cambiar equipos",
+   TOOLTIP_HINTTOGGLE = "click para mostar #NAME# ventana.",
 };
-
-FishingTranslations["esES"].IMPORT_HELP = {
-      "|c0000FF00/fb #IMPORT#|r",
-      "    Import Impp's fishinfo or FishInfo2 data.",
-   };
-FishingTranslations["esES"].SWITCH_HELP = {
-      "|c0000FF00/fb #SWITCH#|r",
-      "    swap outfits (if OutfitDisplayFrame or Outfitter is available)",
-   };
-FishingTranslations["esES"].WATCHER_HELP = {
-      "|c0000FF00/fb #WATCHER#|r [|c0000FF00#WATCHER_LOCK#|r or |c0000FF00#WATCHER_UNLOCK#|r or |c0000FF00#RESET#|r]",
-      "    Unlock the watcher to move the window,",
-      "    lock to stop, reset to reset",
-   };
-FishingTranslations["esES"].CURRENT_HELP = {
-   "|c0000FF00/fb #CURRENT# #RESET#|r",
-   "    Reset the fish caught during the current session.",
-};
-FishingTranslations["esES"].CLEANUP_HELP = {
-      "|c0000FF00/fb #CLEANUP#|r [|c0000FF00f#CHECK#|r or |c0000FF00#NOW#|r]",
-      "    Clean up old settings. |c0000FF00#CHECK#|r lists which",
-      "    settings will be removed by |c0000FF00#NOW#|r.",
-   };
-FishingTranslations["esES"].TRACKING_HELP = {
-      "|c0000FF00/fb #TRACK#|r [|c0000FF00#HOURLY#|r or |c0000FF00#WEEKLY#|r] |c00FF00FF<fish link>|r",
-      "    track the catch times for the specified fish (a shift click link)",
-      "|c0000FF00/fb #NOTRACK#|r |c00FF00FF<fish link>|r",
-      "    remove the specified fish (a shift click link) from the tracker",
-      "|c0000FF00/fb #TRACKING#|r",
-      "    a really bad display of when tracked fish were caught",
-   };
-
-FishingTranslations["esES"].HELPMSG = {
-      "You can use |c0000FF00/fishingbuddy|r or |c0000FF00/fb|r for all commands",
-      "|c0000FF00/fb|r: by itself, toggle the Fishing Buddy window",
-      "|c0000FF00/fb #HELP#|r: display this message",
-      "#SWITCH_HELP#",
-      "#WATCHER_HELP#",
-      "#CURRENT_HELP#",
-      "#CLEANUP_HELP#",
-      "#IMPORT_HELP#",
-      "#TRACKING_HELP#",
-      " ",
-      "You can bind both the window toggle and the outfit",
-      " switch command to keys in the \"Key Bindings\" window.",
-   };
 
 

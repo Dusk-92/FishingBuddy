@@ -17,79 +17,183 @@ local POLES = {
 }
 
 local FISHINGLURES = {
-   ["6533:0:0:0"] = "Aquadynamic Fish Attractor",	-- 100 for 5 mins
-   ["7307:0:0:0"] = "Flesh Eating Worm",		-- 75 for 10 mins
-   ["6532:0:0:0"] = "Bright Baubles",			-- 75 for 10 mins
-   ["6811:0:0:0"] = "Aquadynamic Fish Lens",		-- 50 for 10 mins
-   ["6530:0:0:0"] = "Nightcrawlers",			-- 50 for 10 mins
-   ["6529:0:0:0"] = "Shiny Bauble",			-- 25 for 10 mins
+   [6533] = "Aquadynamic Fish Attractor",	-- 100 for 5 mins
+   [7307] = "Flesh Eating Worm",		-- 75 for 10 mins
+   [6532] = "Bright Baubles",			-- 75 for 10 mins
+   [6811] = "Aquadynamic Fish Lens",		-- 50 for 10 mins
+   [6530] = "Nightcrawlers",			-- 50 for 10 mins
+   [6529] = "Shiny Bauble",			-- 25 for 10 mins
 }
 
 FishingBuddy.OPTIONS = {
-   { ["name"] = "ShowNewFishies",
+   ["ShowNewFishies"] = {
       ["text"] = FishingBuddy.CONFIG_SHOWNEWFISHIES_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_SHOWNEWFISHIES_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 1 },
-   { ["name"] = "WatchFishies",
+   ["WatchFishies"] = {
       ["text"] = FishingBuddy.CONFIG_FISHWATCH_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_FISHWATCH_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 1 },
-   { ["name"] = "WatchCurrentSkill",
+   ["WatchCurrentSkill"] = {
       ["text"] = FishingBuddy.CONFIG_FISHWATCHSKILL_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_FISHWATCHSKILL_INFO,
-      ["default"] = 1 },
-   { ["name"] = "WatchCurrentZone",
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 1,
+      ["deps"] = { ["WatchFishies"] = "d" } },
+   ["WatchCurrentZone"] = {
       ["text"] = FishingBuddy.CONFIG_FISHWATCHZONE_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_FISHWATCHZONE_INFO,
-      ["default"] = 0 },
-   { ["name"] = "WatchOnlyWhenFishing",
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 0,
+      ["deps"] = { ["WatchFishies"] = "d" } },
+   ["WatchOnlyWhenFishing"] = {
       ["text"] = FishingBuddy.CONFIG_FISHWATCHONLY_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_FISHWATCHONLY_INFO,
-      ["default"] = 1 },
-   { ["name"] = "WatchFishPercent",
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 1,
+      ["deps"] = { ["WatchFishies"] = "d" } },
+   ["WatchFishPercent"] = {
       ["text"] = FishingBuddy.CONFIG_FISHWATCHPERCENT_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_FISHWATCHPERCENT_INFO,
-      ["default"] = 1 },
-   { ["name"] = "SortByPercent",
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 1,
+      ["deps"] = { ["WatchFishies"] = "d" } },
+   ["SortByPercent"] = {
       ["text"] = FishingBuddy.CONFIG_SORTBYPERCENT_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_SORTBYPERCENT_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 1 },
-   { ["name"] = "SuitUpFirst",
+   ["SuitUpFirst"] = {
       ["text"] = FishingBuddy.CONFIG_SUITUPFIRST_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_SUITUPFIRST_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 0 },
-   { ["name"] = "EasyCast",
+   ["EasyCast"] = {
       ["text"] = FishingBuddy.CONFIG_EASYCAST_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_EASYCAST_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 1 },
-   { ["name"] = "FastCast",
-      ["text"] = FishingBuddy.CONFIG_FASTCAST_ONOFF,
-      ["tooltip"] = FishingBuddy.CONFIG_FASTCAST_INFO,
-      ["default"] = 1 },
-   { ["name"] = "EasyLures",
+   ["EasyLures"] = {
       ["text"] = FishingBuddy.CONFIG_EASYLURES_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_EASYLURES_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 0 },
-   { ["name"] = "STVTimer",
+   ["STVTimer"] = {
       ["text"] = FishingBuddy.CONFIG_STVTIMER_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_STVTIMER_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
       ["default"] = 0 },
-   { ["name"] = "UseButtonHole",
+   ["STVPoolsOnly"] = {
+      ["text"] = FishingBuddy.CONFIG_STVPOOLSONLY_ONOFF,
+      ["tooltip"] = FishingBuddy.CONFIG_STVPOOLSONLY_INFO,
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 0,
+      ["deps"] = { ["STVTimer"] = "d", ["EasyCast"] = "d" } },
+   ["UseButtonHole"] = {
       ["text"] = FishingBuddy.CONFIG_USEBUTTONHOLE_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_USEBUTTONHOLE_INFO,
+      ["v"] = 1,
       ["default"] = 0,
       ["check"] = function () return ButtonHole ~= nil; end,
       ["checkfail"] = 0 },
-   { ["name"] = "MinimapButtonVisible",
-      ["text"] = FishingBuddy.CONFIG_MINIMAPBUTTON_ONOFF,
+   ["UseGatherer"] = {
+      ["text"] = FishingBuddy.CONFIG_USEGATHERER_ONOFF,
+      ["tooltip"] = FishingBuddy.CONFIG_USEGATHERER_INFO,
+      ["v"] = 1,
+      ["default"] = 0,
+      ["check"] = function () return Gatherer_OnLoad ~= nil; end,
+      ["checkfail"] = 0 },
+   ["MinimapButtonVisible"] = {
       ["tooltip"] = FishingBuddy.CONFIG_MINIMAPBUTTON_INFO,
+      ["v"] = 1,
       ["default"] = 1,
       ["check"] = function () return not FishingBuddy.UseButtonHole(); end,
-      ["checkfail"] = 1 },
-   { ["name"] = "EnhanceFishingSounds",
+      ["checkfail"] = 0,
+      ["update"] = function(checked)
+		      local b = FishingBuddyOption_MinimapButtonVisible;
+		      if ( b:GetChecked() ) then
+			 b.text = "";
+		      else
+			 b.text = FishingBuddy.CONFIG_MINIMAPBUTTON_ONOFF;
+		      end
+		      FishingBuddyOption_MinimapButtonVisibleText:SetText(b.text);
+		   end,
+   },
+   ["EnhanceFishingSounds"] = {
       ["text"] = FishingBuddy.CONFIG_ENHANCESOUNDS_ONOFF,
       ["tooltip"] = FishingBuddy.CONFIG_ENHANCESOUNDS_INFO,
-      ["default"] = 1 },
+      ["v"] = 1,
+      ["m"] = 1,
+      ["default"] = 0 },
+   -- options not in a menu
+   ["ShowLocationZones"] = {
+      ["default"] = 1,
+   },
+   ["GroupByLocation"] = {
+      ["default"] = 1,
+   },
+   ["TitanClickToSwitch"] = {
+      ["default"] = 1,
+   },
+   ["FubarClickToSwitch"] = {
+      ["default"] = 1,
+   },
+   ["InfoBarClickToSwitch"] = {
+      ["default"] = 1,
+   },
+   ["MinimapClickToSwitch"] = {
+      ["default"] = 0,
+   },
+   ["EasyCastKeys"] = {
+      ["default"] = FishingBuddy.KEYS_NONE,
+      ["deps"] = { ["EasyCast"] = "h" },
+   },
+   ["SuitUpKeys"] = {
+      ["default"] = FishingBuddy.KEYS_NONE,
+   },
+   ["EnhanceSoundSoundVolume"] = {
+      ["default"] = 1.0,
+   },
+   ["EnhanceSoundMusicVolume"] = {
+      ["default"] = 0.0,
+   },
+   ["EnhanceSoundAmbienceVolume"] = {
+      ["default"] = 0.0,
+   },
+   ["MinimapButtonPosition"] = {
+      ["default"] = FishingBuddy.DEFAULT_MINIMAP_POSITION,
+   },
+   ["MinimapPosSlider"] = {
+      ["deps"] = { ["MinimapButtonVisible"] = "h", },
+   },
+   ["ClockOffset"] = {
+      ["default"] = 0,
+      ["deps"] = { ["STVTimer"] = "h" },
+      ["visible"] = function()
+		       if ( FishingBuddy.ClockOffsets ) then
+			  return 1;
+		       else
+			  return 0;
+		       end;
+		    end,
+   },
+   ["OutfitManager"] = {
+      ["default"] = "OutfitDisplayFrame",
+   },
 }
 
 FishingBuddy.ByFishie = nil;
@@ -103,10 +207,12 @@ local SavedAddMessage = nil;
 
 FishingBuddy.SavedToggleMinimap = nil;
 
-local StartedFishing = nil;
+FishingBuddy.StartedFishing = nil;
+
 local TestingLures = false;
 local CastingNow = false;
 local AddingLure = false;
+local IsLooting = false;
 
 local FishingSpellID = nil;
 local FishingSkillName = nil;
@@ -114,55 +220,155 @@ local FishingSkillName = nil;
 local gotSetupDone = false;
 local playerName = nil;
 local realmName = nil;
+local schooltipText = nil;
 
 FishingBuddy.currentFishies = {};
 
 local DEFAULT_MINIMAP_POSITION = 256;
 
--- Fill in the player name and realm
-FishingBuddy.SetupNameInfo = function()
-   playerName = UnitName("player");
-   realmName = GetRealmName();
-   return playerName, realmName;
-end
-
-FishingBuddy.GetWasWearing = function()
-   if FishingBuddy_Player["WasWearing"] then
-      return FishingBuddy_Player["WasWearing"];
+local function GetDefault(setting)
+   local opt = FishingBuddy.OPTIONS[setting];
+   if ( opt ) then
+      if ( opt.check and opt.checkfail ) then
+         if ( not opt.check() ) then
+            return opt.checkfail;
+         end
+      end
+      return opt.default;
    end
 end
-
-FishingBuddy.SetWasWearing = function(outfit)
-   FishingBuddy_Player["WasWearing"] = outfit;
-end
-
-FishingBuddy.GetOutfitItem = function(slotName)
-   if (FishingBuddy_Player["Outfit"]) then
-      return FishingBuddy_Player["Outfit"][slotName];
-   end
-end
-
-FishingBuddy.GetOutfit = function()
-   return FishingBuddy_Player["Outfit"];
-end
-
-FishingBuddy.SetOutfit = function(outfit)
-   FishingBuddy_Player["Outfit"] = outfit;
-end
+FishingBuddy.GetDefault = GetDefault;
 
 local function GetSetting(setting)
    if ( not FishingBuddy_Player or
         not FishingBuddy_Player["Settings"] ) then
       return;
    end
-   return FishingBuddy_Player["Settings"][setting];
+   local val = FishingBuddy_Player["Settings"][setting];
+   if ( val == nil ) then
+      val = GetDefault(setting);
+   end
+   return val;
 end
 FishingBuddy.GetSetting = GetSetting;
 
 local function SetSetting(setting, value)
-   FishingBuddy_Player["Settings"][setting] = value;
+   if ( FishingBuddy_Player and setting ) then
+      local val = GetDefault(setting);
+      if ( val == value ) then
+	 FishingBuddy_Player["Settings"][setting] = nil;
+      else
+	 FishingBuddy_Player["Settings"][setting] = value;
+      end
+   end
 end
 FishingBuddy.SetSetting = SetSetting;
+
+local function SetClockOffset(offset)
+   if ( not FishingBuddy_Info["ClockOffsets"] ) then
+      FishingBuddy_Info["ClockOffsets"] = {};
+   end
+   if ( offset == 0 ) then
+      FishingBuddy_Info["ClockOffsets"][realmName] = nil;
+   else
+      FishingBuddy_Info["ClockOffsets"][realmName] = offset;
+   end
+end
+FishingBuddy.SetClockOffset = SetClockOffset;
+
+local function GetClockOffset()
+   if ( not FishingBuddy_Info["ClockOffsets"] or
+        not FishingBuddy_Info["ClockOffsets"][realmName] ) then
+      return 0;
+   end
+   return FishingBuddy_Info["ClockOffsets"][realmName];
+end
+FishingBuddy.GetClockOffset = GetClockOffset;
+
+-- We have to do this at PLAYER_ENTERING_WORLD or PLAYER_LOGIN
+-- GetGameTime isn't correct at VARIABLES_LOADED
+local function CheckClockOffset()
+   local hour,minute = GetGameTime();
+   local lhour = date("%H");
+   local lminute = date("%M");
+   local houroff;
+   houroff = hour - lhour;
+   if ( houroff ~= 0 ) then
+      local houroff24;
+      if ( houroff < 0 ) then
+         houroff24 = 24 + houroff;
+      else
+         houroff24 = houroff - 24;
+      end
+      local offsets = { houroff, houroff24 };
+      FishingBuddy.ClockOffsets = offsets;
+      local current = GetClockOffset();
+      -- don't change it if we've already got a good value
+      if ( current ~= houroff and current ~= houroff24 ) then
+         SetClockOffset(houroff);
+      end
+   else
+      FishingBuddy.ClockOffsets = nil;
+      SetClockOffset(0);
+   end
+   -- Set up the menu and such
+   FishingBuddy.OptionsFrame.SetClockValues(GetClockOffset());
+end
+
+-- look at tooltips
+local function GetTooltipText()
+   local text = "";
+   if ( GameTooltip:IsVisible() ) then
+      text = getglobal("GameTooltipTextLeft1");
+      if ( text ) then
+         return text:GetText();
+      end
+   end
+   return nil;
+end
+FishingBuddy.GetTooltipText = GetTooltipText;
+
+local function OnFishingBobber()
+   local text = GetTooltipText();
+   if ( text ) then
+	 -- let a partial match work (for translations)
+	 return ( text and string.find(text, FishingBuddy.BOBBER_NAME ) );
+   end
+   return false;
+end
+
+-- support finding the fishing skill
+local function FindSpellID(thisone)
+   local id = 1;
+   local spellTexture = GetSpellTexture(id, BOOKTYPE_SPELL);
+   while (spellTexture) do
+      if (spellTexture and spellTexture == thisone) then
+	 return id;
+      end
+      id = id + 1;
+      spellTexture = GetSpellTexture(id, BOOKTYPE_SPELL);
+   end
+   return nil;
+end
+
+local function GetFishingSpellID()
+   if ( not FishingSpellID or not FishingSkillName) then
+      FishingSpellID = FindSpellID(FishingBuddy.FISHINGTEXTURE);
+   end
+   if ( FishingSpellID and not FishingSkillName ) then
+      FishingSkillName = GetSpellName(FishingSpellID, BOOKTYPE_SPELL);
+   end
+end
+
+local function GetFishingSkillName()
+   GetFishingSpellID();
+   if ( not FishingSkillName ) then
+      return FishingBuddy.FISHINGSKILL;
+   else
+      return FishingSkillName;
+   end
+end
+FishingBuddy.GetFishingSkillName = GetFishingSkillName;
 
 -- handle option keys for enabling casting
 local key_actions = {
@@ -173,7 +379,7 @@ local key_actions = {
 }
 local function CastingKeys()
    local setting = GetSetting("EasyCastKeys");
-   if ( key_actions[setting] ) then
+   if ( setting and key_actions[setting] ) then
       return key_actions[setting]();
    else
       return true;
@@ -182,36 +388,153 @@ end
 
 -- get our current fishing skill level
 local lastSkillIndex = nil;
-FishingBuddy.GetCurrentSkill = function()
+local function GetCurrentSkill()
    if ( lastSkillIndex ) then
       local name, _, _, rank, _, modifier = GetSkillLineInfo(lastSkillIndex);
-      if ( name == FishingBuddy.GetFishingSkillName() )then
+      if ( name == GetFishingSkillName() )then
 	 return rank, modifier;
       end
    end
    local n = GetNumSkillLines();
    for i=1,n do
       local name, _, _, rank, _, modifier = GetSkillLineInfo(i);
-      if ( name == FishingBuddy.GetFishingSkillName() ) then
+      if ( name == GetFishingSkillName() ) then
 	 lastSkillIndex = i;
 	 return rank, modifier;
       end
    end
    return 0, 0;
 end
+FishingBuddy.GetCurrentSkill = GetCurrentSkill;
 
-FishingBuddy.SetZoneLevel = function(zone, subzone, fishid)
-   local skill, mods = FishingBuddy.GetCurrentSkill();
+-- handle dynamic event registration
+local function EventRegistration(frame, events, reg)
+   for _,evt in events do
+      if ( reg ) then
+	 frame:RegisterEvent(evt);
+      else
+	 frame:UnregisterEvent(evt);
+      end
+   end
+end
+
+
+-- handle the vagaries of zones and subzones
+local function GetZoneInfo()
+   local zone = GetRealZoneText();
+   local subzone = GetSubZoneText();
+   if ( not zone or zone == "" ) then
+      zone = FishingBuddy.UNKNOWN;
+   end
+   if ( not subzone or subzone == "" ) then
+      subzone = zone;
+   end
+   return zone, subzone;
+end
+FishingBuddy.GetZoneInfo = GetZoneInfo;
+
+local zonemapping;
+local subzonemapping;
+
+local function DumpMappings()
+   FishingBuddy.Debug("Zone mapping");
+   FishingBuddy.Dump(zonemapping);
+   FishingBuddy.Debug("SubZone mapping");
+   FishingBuddy.Dump(subzonemapping);
+end
+FishingBuddy.DumpMappings = DumpMappings;
+
+local function GetZoneIndex(zone, subzone)
+   if ( not zone ) then
+      zone, subzone = GetZoneInfo();
+   end
+   if ( not zonemapping ) then
+      zonemapping = {};
+      for idx,z in FishingBuddy_Info["ZoneIndex"] do
+         zonemapping[z] = idx;
+      end
+   end
+   local zidx = zonemapping[zone];
+   if ( not subzonemapping ) then
+      subzonemapping = {};
+      for idx,_ in FishingBuddy_Info["ZoneIndex"] do
+         subzonemapping[idx] = {};
+         if ( FishingBuddy_Info["SubZones"][idx] ) then
+            for jdx,sz in FishingBuddy_Info["SubZones"][idx] do
+               subzonemapping[idx][sz] = jdx;
+            end
+         end
+      end
+   end
+   if ( not zidx ) then
+      return;
+   end
+   if ( not subzonemapping[zidx] ) then
+      subzonemapping[zidx] = {};
+   end
+   if ( not subzone or not subzonemapping[zidx][subzone] ) then
+      return zidx;
+   end
+   return zidx, subzonemapping[zidx][subzone];
+end
+FishingBuddy.GetZoneIndex = GetZoneIndex;
+
+local function AddZoneIndex(zone, subzone)
+   if ( not zone ) then
+      zone, subzone = GetZoneInfo();
+   end
+   if ( type(zone) ~= "string" ) then
+      FishingBuddy.Debug("AddZoneIndex "..zone);
+   end
+   local zidx, sidx = GetZoneIndex(zone, subzone);
+   if ( not zidx ) then
+      tinsert(FishingBuddy_Info["ZoneIndex"], zone);
+      zidx = table.getn(FishingBuddy_Info["ZoneIndex"]);
+      zonemapping[zone] = zidx;
+      -- keep sort helpers up to date
+      if ( FishingBuddy.SortedZones ) then
+         tinsert(FishingBuddy.SortedZones, zone);
+         table.sort(FishingBuddy.SortedZones);
+      end
+   end
+   if ( not subzone ) then
+      return zidx;
+   end
+   if ( not subzonemapping[zidx] ) then
+      subzonemapping[zidx] = {};
+   end
+   if ( not subzonemapping[zidx][subzone] ) then
+      if ( not FishingBuddy_Info["SubZones"][zidx] ) then
+         FishingBuddy_Info["SubZones"][zidx] = {};
+      end
+      tinsert(FishingBuddy_Info["SubZones"][zidx], subzone);
+      subzonemapping[zidx][subzone] = table.getn(FishingBuddy_Info["SubZones"][zidx]);
+      -- keep sort helpers up to date
+      if ( FishingBuddy.SortedByZone ) then
+         FishingBuddy.SortedByZone[zone] = {};
+         tinsert(FishingBuddy.SortedByZone[zone], subzone);
+         table.sort(FishingBuddy.SortedByZone[zone]);
+         tinsert(FishingBuddy.SortedSubZones, subzone);
+         table.sort(FishingBuddy.SortedSubZones);
+      end
+   end
+   return zidx, subzonemapping[zidx][subzone];
+end
+FishingBuddy.AddZoneIndex = AddZoneIndex;
+
+local function SetZoneLevel(zone, subzone, fishid)
+   local skill, mods = GetCurrentSkill();
+   local zidx, sidx = GetZoneIndex(zone, subzone);
    local fs = FishingBuddy_Info["FishingSkill"];
-   if ( not fs[zone] ) then
-      fs[zone] = {};
+   if ( not fs[zidx] ) then
+      fs[zidx] = {};
    end
    local skillcheck = skill + mods;
    if ( skillcheck > 0 ) then
-      if ( not fs[zone][subzone] or skillcheck < fs[zone][subzone] ) then
-         fs[zone][subzone] = skillcheck;
+      if ( not fs[zidx][sidx] or skillcheck < fs[zidx][sidx] ) then
+         fs[zidx][sidx] = skillcheck;
       end
-      if ( fishie ) then
+      if ( fishid ) then
          if ( not FishingBuddy_Info["Fishies"][fishid].level or
               skillcheck < FishingBuddy_Info["Fishies"][fishid].level ) then
             FishingBuddy_Info["Fishies"][fishid].level = skillcheck;
@@ -221,26 +544,59 @@ FishingBuddy.SetZoneLevel = function(zone, subzone, fishid)
       end
    end
 end
+FishingBuddy.SetZoneLevel = SetZoneLevel;
 
 local OldBindingKey;
+local OldBindingKey2;
 local function UpdateBindings(onoff)
-   if ( onoff ) then
-      if ( not OldKeyBinding ) then
-	 OldKeyBinding = GetBindingKey("TURNORACTION");
-	 if ( OldKeyBinding ) then
-	    SetBinding(OldKeyBinding, "FISHINGBUDDY_PERFORMCAST");
-	 else
-	    FishingBuddy.UIError(FishingBuddy.TOOMANYFISHERMEN);
-	 end
-      end
-   else
-      if ( OldKeyBinding ) then
-	 SetBinding(OldKeyBinding, "TURNORACTION");
-	 OldKeyBinding = nil;
-      end
-   end
+	if ( onoff ) then
+		if ( not OldKeyBinding ) then
+			OldKeyBinding, OldBindingKey2 = GetBindingKey("TURNORACTION");
+			if ( OldKeyBinding ) then
+				SetBinding(OldKeyBinding, "FISHINGBUDDY_PERFORMCAST");
+				if (OldBindingKey2) then
+					SetBinding(OldBindingKey2, "FISHINGBUDDY_PERFORMCAST");
+				end
+			else
+				FishingBuddy.UIError(FishingBuddy.TOOMANYFISHERMEN);
+			end
+		end
+	else
+		if ( OldKeyBinding ) then
+			SetBinding(OldKeyBinding, "TURNORACTION");
+			OldKeyBinding = nil;
+			if (OldBindingKey2) then
+				SetBinding(OldBindingKey2, "TURNORACTION");
+				OldBindingKey2 = nil;
+			end
+		end
+	end
 end
 FishingBuddy.UpdateBindings = UpdateBindings;
+
+-- Something else that should be in a library
+local function SplitLink(link)
+   if ( link ) then
+      local _,_, color, item, name = string.find(link, "|c(%x+)|Hitem:(%d+:%d+:%d+:%d+)|h%[(.-)%]|h|r");
+      return color, item, name;
+   end
+end
+FishingBuddy.SplitLink = SplitLink;
+
+local function SplitFishLink(link)
+   if ( link ) then
+      local _,_, color, id, name = string.find(link, "|c(%x+)|Hitem:(%d+):%d+:%d+:%d+|h%[(.-)%]|h|r");
+      return color, tonumber(id), name;
+   end
+end
+FishingBuddy.SplitFishLink = SplitFishLink;
+
+local function IsLinkableItem(item)
+   local link = "item:"..item;
+   local n,l,_,_,_,_,_,_ = GetItemInfo(link);
+   return ( n and l );
+end
+FishingBuddy.IsLinkableItem = IsLinkableItem;
 
 -- Shamelessly stolen from TackleBox
 local function IsFishingPole()
@@ -251,13 +607,15 @@ local function IsFishingPole()
    -- that matches the fishing pole texture, then we have a fishing pole
    if ( itemTexture and string.find(itemTexture, "INV_Fishingpole") ) then
       local link = GetInventoryItemLink("player", slot);
-	  local _, id, _ = FishingBuddy.SplitLink(link);
+	  local _, id, _ = SplitLink(link);
       -- Make sure it's not "Nat Pagle's Fish Terminator"
-      return (id ~= 19944);
+      if ( not string.find(id, "^19944") ) then
+         return true;
+       end
    end
    return false;
 end
-FishingBuddy.IsFishingPole = IsFishingPole;
+FishingBuddy.API.IsFishingPole = IsFishingPole;
 
 -- override the error message method (need an object as the first arg)
 local function UIError_AddMessage( o, msg, a, r, g, b, hold )
@@ -273,10 +631,22 @@ local function UIError_AddMessage( o, msg, a, r, g, b, hold )
 end
 FishingBuddy.AddMessage = UIError_AddMessage;
 
-local function HijackCheck()
-   return ( GetSetting("EasyCast") == 1 and
-	    CastingKeys() and IsFishingPole() );
+local function NormalHijackCheck()
+   if ( GetSetting("EasyCast") == 1 and
+       CastingKeys() and IsFishingPole() ) then
+      return true;
+   end
 end
+FishingBuddy.NormalHijackCheck = NormalHijackCheck;
+
+local HijackCheck = NormalHijackCheck;
+local function SetHijackCheck(func)
+   if ( not func ) then
+      func = NormalHijackCheck;
+   end
+   HijackCheck = func;
+end
+FishingBuddy.SetHijackCheck = SetHijackCheck;
 
 local SavedWFOnMouseUp;
 local SavedWFOnMouseDown;
@@ -322,7 +692,7 @@ local function WF_OnMouseUp()
 end
 
 -- Find things in our inventory
-local function FindItem(id)
+local function FindItemByID(id)
    if ( id ) then
       local numSlots = 0;
       -- check each of the bags on the player
@@ -334,8 +704,7 @@ local function FindItem(id)
 	    for slot=1, numSlots do
 	       local link = GetContainerItemLink (bag,slot);
 	       if (link) then
-		  local c, i, n = FishingBuddy.SplitLink(link);
-		  local check = string.gsub(i, "^(%d+):(%d+):(%d+):(%d+)$", "%1:%2:0:0");
+		  local c, check, n = SplitFishLink(link);
 		  if ( check == id ) then
 		     return bag, slot;
 		  end
@@ -362,35 +731,7 @@ local function SafeHookScript(frame, handlername, newscript)
    return oldValue;
 end
 
--- Something else that should be in a library
-FishingBuddy.SplitLink = function(link)
-   if ( link ) then
-      local _,_, color, item, name = string.find(link, "|c(%x+)|Hitem:(%d+:%d+:%d+:%d+)|h%[(.-)%]|h|r");
-      return color, item, name;
-   end
-end
-
-FishingBuddy.SplitFishLink = function(link)
-   if ( link ) then
-      local _,_, color, id, name = string.find(link, "|c(%x+)|Hitem:(%d+):%d+:%d+:%d+|h%[(.-)%]|h|r");
-      return color, tonumber(id), name;
-   end
-end
-
--- handle the vagaries of zones and subzones
-FishingBuddy.GetZoneInfo = function()
-   local zone = GetRealZoneText();
-   local subzone = GetSubZoneText();
-   if ( not zone or zone == "" ) then
-      zone = FishingBuddy.UNKNOWN;
-   end
-   if ( not subzone or subzone == "" ) then
-      subzone = zone;
-   end
-   return zone, subzone;
-end
-
-FishingBuddy.AddFishie = function(color, id, name, zone, subzone, texture, quantity, quality)
+local function AddFishie(color, id, name, zone, subzone, texture, quantity, quality)
    if ( not FishingBuddy_Info["Fishies"][id] ) then
       FishingBuddy_Info["Fishies"][id] = { };
       FishingBuddy_Info["Fishies"][id].name = name;
@@ -404,6 +745,9 @@ FishingBuddy.AddFishie = function(color, id, name, zone, subzone, texture, quant
 	 FishingBuddy.FishSort(FishingBuddy.SortedFishies, true);
       end
    end
+   if ( name and not FishingBuddy_Info["Fishies"][id].name ) then
+      FishingBuddy_Info["Fishies"][id].name = name;
+   end
 
    if ( not zone ) then
       zone = FishingBuddy.UNKNOWN;
@@ -411,37 +755,31 @@ FishingBuddy.AddFishie = function(color, id, name, zone, subzone, texture, quant
    if ( not subzone ) then
       subzone = zone;
    end
+   local zidx, sidx = AddZoneIndex(zone, subzone);
 
-   if ( not FishingBuddy.currentFishies[subzone] ) then
-      FishingBuddy.currentFishies[subzone] = {};
+   if ( not FishingBuddy.currentFishies[sidx] ) then
+      FishingBuddy.currentFishies[sidx] = {};
    end
-   if ( not FishingBuddy.currentFishies[subzone][id] ) then
-      FishingBuddy.currentFishies[subzone][id] = quantity;
+   if ( not FishingBuddy.currentFishies[sidx][id] ) then
+      FishingBuddy.currentFishies[sidx][id] = quantity;
    else
-      FishingBuddy.currentFishies[subzone][id] = FishingBuddy.currentFishies[subzone][id] + quantity;
+      FishingBuddy.currentFishies[sidx][id] = FishingBuddy.currentFishies[sidx][id] + quantity;
    end
 
-   if( not FishingBuddy_Info["FishingHoles"][zone] ) then
-      FishingBuddy_Info["FishingHoles"][zone] = { };
-      tinsert(FishingBuddy.SortedZones, zone);
-      table.sort(FishingBuddy.SortedZones);
+   if( not FishingBuddy_Info["FishingHoles"][zidx] ) then
+      FishingBuddy_Info["FishingHoles"][zidx] = { };
    end
-   if( not FishingBuddy_Info["FishingHoles"][zone][subzone] ) then
-      FishingBuddy_Info["FishingHoles"][zone][subzone] = { };
-      FishingBuddy.SortedByZone[zone] = {};
-      tinsert(FishingBuddy.SortedByZone[zone], subzone);
-      table.sort(FishingBuddy.SortedByZone[zone]);
-      tinsert(FishingBuddy.SortedSubZones, subzone);
-      table.sort(FishingBuddy.SortedSubZones);
+   if( not FishingBuddy_Info["FishingHoles"][zidx][sidx] ) then
+      FishingBuddy_Info["FishingHoles"][zidx][sidx] = { };
    end
-   local fh = FishingBuddy_Info["FishingHoles"][zone];
-   if ( not fh[subzone][id] ) then
-      fh[subzone][id] = quantity;
+   local fh = FishingBuddy_Info["FishingHoles"][zidx];
+   if ( not fh[sidx][id] ) then
+      fh[sidx][id] = quantity;
       if ( GetSetting("ShowNewFishies") == 1 ) then
 	 FishingBuddy.Print(FishingBuddy.ADDFISHIEMSG, name, subzone);
       end
    else
-      fh[subzone][id] = fh[subzone][id] + quantity;
+      fh[sidx][id] = fh[sidx][id] + quantity;
    end
 
    if ( FishingBuddy.ByFishie ) then
@@ -449,14 +787,15 @@ FishingBuddy.AddFishie = function(color, id, name, zone, subzone, texture, quant
 	 FishingBuddy.ByFishie[id] = {};
       end
       if ( not FishingBuddy.ByFishie[id][subzone] ) then
-	 FishingBuddy.ByFishie[id][subzone] = quantity;
+	 FishingBuddy.ByFishie[id][sidx] = quantity;
       else
-	 FishingBuddy.ByFishie[id][subzone] = FishingBuddy.ByFishie[id][subzone] + quantity;
+	 FishingBuddy.ByFishie[id][sidx] = FishingBuddy.ByFishie[id][sidx] + quantity;
       end
    end
    FishingBuddy.Locations.DataChanged(zone, subzone, fishie);
    FishingBuddy.WatchUpdate();
 end
+FishingBuddy.AddFishie = AddFishie;
 
 FishingBuddy.GetFishie = function(fishid)
    if( FishingBuddy_Info["Fishies"][fishid] ) then
@@ -485,7 +824,7 @@ local function ImportFish()
 		  for zone in fz do
 		     for subzone in fz[zone] do
 			local quantity = fz[zone][subzone];
-			FishingBuddy.AddFishie("ffffffff", id, fishie, zone, subzone, texture, quantity, quality)
+			AddFishie("ffffffff", id, fishie, zone, subzone, texture, quantity, quality)
 		     end
 		  end
 	       end
@@ -500,7 +839,7 @@ local function ImportFish()
 --	    local quantity = imppfishinfoDB[subzone]["itemnames"][item].number;
 --	    local texture = imppfishinfoDB[subzone]["itemnames"][item].texture;
 --	    local quality = imppfishinfoDB[subzone]["itemnames"][item].quality;
---	    FishingBuddy.AddFishie(color, id, name, subzone, texture, item, quantity, quality)
+--	    AddFishie(color, id, name, subzone, texture, item, quantity, quality)
 --	 end
 --      end
 --      FishingBuddy_Info["ImppDBLoaded"] = 1;
@@ -513,7 +852,7 @@ local function ImportFish()
 --	       local quantity = dfl["number"];
 --	       local texture = dfl["texture"];
 --	       local quality = dfl["quality"];
---	       FishingBuddy.AddFishie(color, id, name, zone, subzone, texture, quantity, quality)
+--	       AddFishie(color, id, name, zone, subzone, texture, quantity, quality)
 --	    end
 --	 end
 --      end
@@ -525,38 +864,6 @@ local function ImportFish()
    SetSetting("ShowNewFishies", oldShowNewFishies);
 end
 
-local function FindSpellID(thisone)
-   local id = 1;
-   local spellTexture = GetSpellTexture(id, BOOKTYPE_SPELL);
-   while (spellTexture) do
-      if (spellTexture and spellTexture == thisone) then
-	 return id;
-      end
-      id = id + 1;
-      spellTexture = GetSpellTexture(id, BOOKTYPE_SPELL);
-   end
-   return nil;
-end
-
-local function GetFishingSpellID()
-   if ( not FishingSpellID or not FishingSkillName) then
-      FishingSpellID = FindSpellID(FishingBuddy.FISHINGTEXTURE);
-   end
-   if ( FishingSpellID and not FishingSkillName ) then
-      FishingSkillName = GetSpellName(FishingSpellID, BOOKTYPE_SPELL);
-   end
-end
-
-FishingBuddy.GetFishingSkillName = function()
-   GetFishingSpellID();
-   if ( not FishingSkillName ) then
-      return FishingBuddy.FISHINGSKILL;
-   else
-      return FishingSkillName;
-   end
-
-end
-
 local function InvokeFishing()
    GetFishingSpellID();
    if ( FishingSpellID ) then
@@ -564,22 +871,36 @@ local function InvokeFishing()
    end
 end
 
+local ModeEventTable = {
+   "LOOT_OPENED",
+   "LOOT_CLOSED",
+   "SPELLS_CHANGED",
+   "SPELLCAST_CHANNEL_START",
+   "SPELLCAST_CHANNEL_STOP",
+   "SPELLCAST_START",
+   "SPELLCAST_STOP",
+   "SPELLCAST_INTERRUPTED",
+   "SPELLCAST_FAILED",
+   "SKILL_LINES_CHANGED",
+};
+
 -- do everything we think is necessary when we start fishing
 -- even if we didn't do the switch to a fishing pole
 local function StartFishingMode()
-   if ( not StartedFishing ) then
-      StartedFishing = GetTime();
+   if ( not FishingBuddy.StartedFishing ) then
+      FishingBuddy.StartedFishing = GetTime();
       FishingBuddy.EnhanceFishingSounds(true);
       FishingBuddy.WatchUpdate();
+      EventRegistration(FishingBuddyRoot, ModeEventTable, true);
    end
 end
-FishingBuddy.StartFishingMode = StartFishingMode;
 
 local function StopFishingMode()
-   if ( StartedFishing ) then
+   if ( FishingBuddy.StartedFishing ) then
       FishingBuddy.EnhanceFishingSounds(false);
       FishingBuddy.WatchUpdate();
-      StartedFishing = nil;
+      FishingBuddy.StartedFishing = nil;
+      EventRegistration(FishingBuddyRoot, ModeEventTable, false);
    end
    if ( resetClickToMove ) then
       -- Re-enable Click-to-Move if we changed it
@@ -587,7 +908,6 @@ local function StopFishingMode()
       resetClickToMove = nil;
    end
 end
-FishingBuddy.StopFishingMode = StopFishingMode;
 
 local function FishingMode()
    if ( IsFishingPole() ) then
@@ -596,19 +916,7 @@ local function FishingMode()
       StopFishingMode();
    end
 end
-FishingBuddy.FishingMode = FishingMode;
-
-local function OnFishingBobber()
-   if ( GameTooltip:IsVisible() ) then
-      local text = getglobal("GameTooltipTextLeft1");
-      if ( text ) then
-	 text = text:GetText();
-	 -- let a partial match work (for translations)
-	 return ( text and string.find(text, FishingBuddy.BOBBER_NAME ) );
-      end
-   end
-   return false;
-end
+FishingBuddy.API.FishingMode = FishingMode;
 
 -- Easy lures (borrowed from Mugendai's excellent code)
 local function UpdateLure()
@@ -623,7 +931,7 @@ local function UpdateLure()
       local bag, slot;
       for lure in FISHINGLURES do
 	 --If we find this lure in the bag, then use it
-	 bag, slot = FindItem(lure);
+	 bag, slot = FindItemByID(lure);
 	 if (bag and slot) then
 	    --We need to temporarily disable the cant use item error, incase this item is too high of a level to use
 	    TestingLures = true;
@@ -679,13 +987,13 @@ FishingBuddy.StopCastingCheck = function()
    local time = GetTime();
    local pressTime = time - ActionStartTime;
    local doubleTime = time - ActionDoubleTime;
-   -- if we're not putting on a lure and the casting modifiers are good
+   -- if we're not putting on a lure
    if ( not SpellIsTargeting() ) then
       -- if the click was "short" enough that we're going to treat it
       -- as a cast
       if ( ActionStartTime > 0 and ACTIONDOWNWAIT >= pressTime) then
 	 -- if we're already casting, enforce double click timing
-	 if ( GetSetting("FastCast") ~= 1 and CastingNow and
+	 if ( CastingNow and
 	     ( ActionDoubleTime == 0 or ACTIONDOUBLEWAIT < doubleTime ) ) then
 	    ActionDoubleTime = GetTime();
 	 else
@@ -704,11 +1012,29 @@ FishingBuddy.PerformCast = function()
    end
    -- reset the TURNORACTION binding so that everything else works 'right'
    UpdateBindings(false);
+
+   if ( not schooltipText or not OnFishingBobber() ) then
+      -- watch for fishing holes
+      schooltipText = GetTooltipText();
+   end
+
    -- put on a lure if we need to
    if ( not UpdateLure() ) then
       InvokeFishing();
    end
 end
+
+FishingBuddy.SuitUpAndGoFishing = function()
+   if ( IsFishingPole() ) then
+      -- put on a lure if we need to
+      if ( not UpdateLure() ) then
+	 InvokeFishing();
+      end
+   elseif ( GetSetting("SuitUpFirst") == 1 ) then
+      FishingBuddy.OutfitManager.Switch();
+   end
+end
+
 
 FishingBuddy.TrapUIErrors = function()
    local temp = {};
@@ -724,14 +1050,57 @@ FishingBuddy.TrapWorldMouse = function()
    SavedWFOnMouseDown = SafeHookScript(WorldFrame, "OnMouseDown", WF_OnMouseDown);
 end
 
--- User interface handling
+-- we should collect these, but then they would be in the cache
+local QuestItems = {};
+QuestItems[6717] = 1;  -- Gaffer Jack
+QuestItems[6718] = 1;  -- Electropeller
+QuestItems[16970] = 1; -- Misty Reed Mahi Mahi
+QuestItems[16968] = 1; -- Sar'theris Striker
+QuestItems[16969] = 1; -- Savage Coast Blue
+QuestItems[16967] = 1; -- Feralas Ahi
 
-FishingBuddy.Commands = {};
-FishingBuddy.Commands[FishingBuddy.SWITCH] = {};
-FishingBuddy.Commands[FishingBuddy.SWITCH].func = function()
-					FishingBuddy.OutfitManager.Switch();
-					return true;
-				     end;
+-- User interface handling
+local function IsRareFish(id, forced)
+   -- always skip extravaganza fish
+   if ( FishingBuddy.Extravaganza.Fish[id] ) then
+      return true;
+   end
+   return ( not forced and QuestItems[id] );
+end
+
+FishingBuddy.Commands[FishingBuddy.UPDATEDB] = {};
+FishingBuddy.Commands[FishingBuddy.UPDATEDB].help = FishingBuddy.UPDATEDB_HELP;
+FishingBuddy.Commands[FishingBuddy.UPDATEDB].func =
+   function(what)
+      local ff = FishingBuddy_Info["Fishies"];
+      local forced;
+      if ( what and what == FishingBuddy.FORCE ) then
+	 forced = true;
+      end
+      FishingOutfitTooltip:SetOwner(FishingBuddyFrame, "ANCHOR_RIGHT");
+      FishingOutfitTooltip:Show();
+      local count = 0;
+      for id,info in ff do
+	 local item = id..":0:0:0";
+	 if ( not IsLinkableItem(item) or not info.name ) then
+	    if ( not IsRareFish(id, forced) ) then
+	       local link = "item:"..item;
+	       -- fetch the data (may disconnect)
+	       FishingBuddy.Debug(link);
+	       FishingOutfitTooltip:SetHyperlink(link);
+	       -- now that we have it in our cache, get the name
+	       local n,_,_,_,_,_,_,_ = GetItemInfo(link);
+	       if ( n ) then
+		  count = count + 1;
+   	          FishingBuddy_Info["Fishies"][id].name = n;
+   	       end
+	    end
+	 end
+      end
+      FishingBuddy.Print(FishingBuddy.UPDATEDB_MSG, count);
+      return true;
+   end;
+
 FishingBuddy.Commands[FishingBuddy.CURRENT] = {};
 FishingBuddy.Commands[FishingBuddy.CURRENT].help = FishingBuddy.CURRENT_HELP;
 FishingBuddy.Commands[FishingBuddy.CURRENT].func =
@@ -924,25 +1293,34 @@ FishingBuddy.Command = function(msg)
    end
 end
 
+FishingBuddy.TooltipBody = function(hintcheck)
+   local text = FishingBuddy.DESCRIPTION1.."\n"..FishingBuddy.DESCRIPTION2;
+   if ( hintcheck ) then
+      text = text.."\n".."|c"..FishingBuddy.Colors.GREEN;
+      text = text .. FishingBuddy.TOOLTIP_HINT.." ";
+      if (FishingBuddy.GetSetting(hintcheck) == 1) then
+         text = text..FishingBuddy.TOOLTIP_HINTSWITCH;
+      else
+         text = text..FishingBuddy.TOOLTIP_HINTTOGGLE;
+      end
+      text = text.."|r";
+   end
+   return text;
+end
+
+local IWEventTable = {
+   "ITEM_LOCK_CHANGED",
+};
+
 FishingBuddy.OnLoad = function()
+   this:RegisterEvent("PLAYER_ENTERING_WORLD");
+   this:RegisterEvent("PLAYER_LEAVING_WORLD");
+
    this:RegisterEvent("PLAYER_LOGIN");
    this:RegisterEvent("PLAYER_LOGOUT");
    this:RegisterEvent("VARIABLES_LOADED");
 
-   this:RegisterEvent("ITEM_LOCK_CHANGED");
-   this:RegisterEvent("LOOT_OPENED");
-   this:RegisterEvent("ZONE_CHANGED");
    this:RegisterEvent("MINIMAP_ZONE_CHANGED");
-
-   this:RegisterEvent("SPELLS_CHANGED");
-   this:RegisterEvent("SPELLCAST_CHANNEL_START");
-   this:RegisterEvent("SPELLCAST_CHANNEL_STOP");
-   this:RegisterEvent("SPELLCAST_START");
-   this:RegisterEvent("SPELLCAST_STOP");
-   this:RegisterEvent("SPELLCAST_INTERRUPTED");
-   this:RegisterEvent("SPELLCAST_FAILED");
-
-   this:RegisterEvent("SKILL_LINES_CHANGED");
 
    -- Set up command
    SlashCmdList["fishingbuddy"] = FishingBuddy.Command;
@@ -952,72 +1330,107 @@ FishingBuddy.OnLoad = function()
    FishingBuddy.Output(FishingBuddy.WINDOW_TITLE.." loaded");
 end
 
+local IsZoning;
+local ZoneEvents;
+local function TrackZoneEvents(evt)
+   if ( IsZoning ) then
+      if ( not ZoneEvents ) then
+	 ZoneEvents = {};
+      end
+      if ( ZoneEvents[evt] ) then
+	 ZoneEvents[evt] = ZoneEvents[evt] + 1;
+      else
+	 ZoneEvents[evt] = 1;
+      end
+   end
+end
+
+local function DumpZoneEvents()
+   FishingBuddy.Dump(ZoneEvents);
+   ZoneEvents = nil;
+end
+
 FishingBuddy.OnEvent = function()
    local needUpdate = false;
-   if ( event == "VARIABLES_LOADED" ) then
-      FishingBuddy.Initialize();
+-- TrackZoneEvents(event);
+   if ( event == "LOOT_OPENED" ) then
+      IsLooting = true;
+      if ( IsFishingLoot()) then
+         local zone, subzone = GetZoneInfo();
+         local check = FishingBuddy.Schools.CheckFishingHole;
+         for index = 1, GetNumLootItems(), 1 do
+            if (LootSlotIsItem(index)) then
+               local texture, fishie, quantity, quality = GetLootSlotInfo(index);
+               local link = GetLootSlotLink(index);
+               local color, id, name = SplitFishLink(link);
+               AddFishie(color, id, name, zone, subzone, texture, quantity, quality);
+               if ( FishingBuddy.AddTracking ) then
+                  FishingBuddy.AddTracking(id, name);
+               end
+               check(schooltipText, id);
+               SetZoneLevel(zone, subzone, id);
+            end
+         end
+         if ( schooltipText ) then
+            schooltipText = nil;
+         end
+      end
+   elseif ( event == "LOOT_CLOSED" ) then
+      IsLooting = false;
+   elseif ( event == "MINIMAP_ZONE_CHANGED" ) then
+      if ( not FishingBuddy.IsLoaded() ) then
+	 return;
+      end
+      FishingBuddy.currentFishies = {};
+      needUpdate = true;
+   elseif ( event == "SPELLS_CHANGED" ) then
+      -- Fishing might have moved, go look again
+      FishingSpellID = nil;
+   elseif ( event == "ITEM_LOCK_CHANGED" ) then
+      FishingMode();
+   elseif ( event == "SPELLCAST_CHANNEL_START" ) then
+      -- Mugendai is one sharp cookie (shamelessly stealing from TackleBox)
+      -- Keep up with whether or not we are casting
+      CastingNow = true;
+   elseif ( event == "SPELLCAST_CHANNEL_STOP" ) then
+      CastingNow = false;
+   elseif ( event == "SPELLCAST_START" ) then
+      -- AddingLure = true;
+   elseif ( event == "SPELLCAST_STOP" ) then
+      if ( AddingLure ) then
+	 AddingLure = false;
+	 -- update the skill line if we have one
+	 if ( GetSetting("WatchCurrentSkill") == 1 ) then
+	    needUpdate = true;
+	 end
+      end
+   elseif ( ( event == "SPELLCAST_INTERRUPTED" ) or ( event == "SPELLCAST_FAILED" ) ) then
+      AddingLure = false;
+   elseif ( event == "SKILL_LINES_CHANGED" ) then
+      if ( GetSetting("WatchCurrentSkill") == 1 ) then
+	 needUpdate = true;
+      end
    elseif ( event == "PLAYER_LOGIN" ) then
       -- set up outfit stuff
+      playerName = UnitName("player");
+      realmName = GetRealmName();
+      CheckClockOffset();
       FishingBuddy.OutfitManager.Initialize();
       FishingMode();
    elseif ( event == "PLAYER_LOGOUT" ) then
       -- reset the fishing sounds, if we need to
       StopFishingMode();
       FishingBuddy.SavePlayerInfo();
-   elseif ( event == "ITEM_LOCK_CHANGED" ) then
-      FishingMode();
-   elseif ( event == "LOOT_OPENED" ) then
-      if ( IsFishingLoot()) then
-	 local zone, subzone = FishingBuddy.GetZoneInfo();
-	 for index = 1, GetNumLootItems(), 1 do
-	    if (LootSlotIsItem(index)) then
-	       local texture, fishie, quantity, quality = GetLootSlotInfo(index);
-	       local link = GetLootSlotLink(index);
-	       local color, id, name = FishingBuddy.SplitFishLink(link);
-	       FishingBuddy.AddFishie(color, id, name, zone, subzone, texture, quantity, quality);
-	       if ( FishingBuddy.AddTracking ) then
-		  FishingBuddy.AddTracking(id, name);
-	       end
-	       FishingBuddy.SetZoneLevel(zone, subzone, id);
-	    end
-	 end
-      end
-   elseif ( event == "ZONE_CHANGED" or event == "MINIMAP_ZONE_CHANGED" ) then
-      if ( not FishingBuddy.IsLoaded() ) then
-	 return;
-      end
-      FishingBuddy.currentFishies = {};
-      needUpdate = true;
-   elseif ( event == "SKILL_LINES_CHANGED" ) then
-      if ( GetSetting("WatchCurrentSkill") == 1 ) then
-	 needUpdate = true;
-      end
-   elseif ( event == "SPELLS_CHANGED" ) then
-      -- Fishing might have moved, go look again
-      FishingSpellID = nil;
-   else
-      -- Mugendai is one sharp cookie (shamelessly stealing from TackleBox again)
-      -- Keep up with whether or not we are casting
-      if ( event == "SPELLCAST_CHANNEL_START" ) then
-	 CastingNow = true;
-      elseif ( event == "SPELLCAST_CHANNEL_STOP" ) then
-	 CastingNow = false;
-      else
-	 -- Keep up with whether we are adding a lure (or casting a normal spell) or not
-	 if ( event == "SPELLCAST_START" ) then
-	    -- AddingLure = true;
-	 elseif ( event == "SPELLCAST_STOP" ) then
-	    if ( AddingLure ) then
-	       AddingLure = false;
-	       -- update the skill line if we have one
-	       if ( GetSetting("WatchCurrentSkill") == 1 ) then
-		  needUpdate = true;
-	       end
-	    end
-	 elseif ( ( event == "SPELLCAST_INTERRUPTED" ) or ( event == "SPELLCAST_FAILED" ) ) then
-	    AddingLure = false;
-	 end
-      end
+   elseif ( event == "VARIABLES_LOADED" ) then
+      FishingBuddy.Initialize();
+      this:UnregisterEvent("VARIABLES_LOADED");
+   elseif ( event == "PLAYER_ENTERING_WORLD" ) then
+      IsZoning = nil;
+--    DumpZoneEvents();
+      EventRegistration(this, IWEventTable, true);
+   elseif ( event == "PLAYER_LEAVING_WORLD") then
+      IsZoning = 1;
+      EventRegistration(this, IWEventTable, false);
    end
    FishingBuddy.Extravaganza.IsTime(true);
    if ( needUpdate ) then
@@ -1026,12 +1439,20 @@ FishingBuddy.OnEvent = function()
 end
 
 FishingBuddy.PrintHelp = function(tab)
-   if ( type(tab) == "table" ) then
-      for _,line in tab do
-	 FishingBuddy.PrintHelp(line);
+   if ( tab ) then
+      if ( type(tab) == "table" ) then
+	 for _,line in tab do
+	    FishingBuddy.PrintHelp(line);
+	 end
+      else
+	 -- check for a reference to another help item
+	 local _,_,w = string.find(tab, "^@([A-Z0-9_]+)$");
+	 if ( w ) then
+	    FishingBuddy.PrintHelp(FishingBuddy[w]);
+	 else
+	    FishingBuddy.Output(tab);
+	 end
       end
-   else
-      FishingBuddy.Output(tab);
    end
 end
 
@@ -1085,6 +1506,7 @@ local function MakeToggle(name)
    end
    return ToggleFunctions[name];
 end
+FishingBuddy.MakeToggle = MakeToggle;
 
 FishingBuddy.MakeDropDown = function(switchItem, switchSetting)
    local info;
@@ -1096,23 +1518,25 @@ FishingBuddy.MakeDropDown = function(switchItem, switchSetting)
       info.checked = (GetSetting(switchSetting) == 1);
       info.keepShownOnClick = 1;
       UIDropDownMenu_AddButton(info);
-	  info = {};
-	  info.disabled = 1;
-	  UIDropDownMenu_AddButton(info);
+      info = {};
+      info.disabled = 1;
+      UIDropDownMenu_AddButton(info);
    end
 
-   for _, option in FishingBuddy.OPTIONS do
-      local addthis = true;
-      if ( option.check ) then
-	 addthis = option.check();
-      end
-      if ( addthis ) then
-	 info = {};
-	 info.text = option.text;
-	 info.func = MakeToggle(option.name);
-	 info.checked = (GetSetting(option.name) == 1);
-	 info.keepShownOnClick = 1;
-	 UIDropDownMenu_AddButton(info);
+   for name,option in FishingBuddy.OPTIONS do
+      if ( option.m ) then
+	 local addthis = true;
+	 if ( option.check ) then
+	    addthis = option.check();
+	 end
+	 if ( addthis ) then
+	    info = {};
+	    info.text = option.text;
+	    info.func = MakeToggle(name);
+	    info.checked = (GetSetting(name) == 1);
+	    info.keepShownOnClick = 1;
+	    UIDropDownMenu_AddButton(info);
+	 end
       end
    end
 end
@@ -1142,9 +1566,70 @@ end
 
 FishingBuddy.FishSort = function(tab, forcename)
    if ( forcename or GetSetting("SortByPercent") == 0 ) then
-      table.sort(tab, function(a,b) return a.text and b.text and a.text<b.text; end);
+      table.sort(tab, function(a,b) return (a.index and b.index and a.index<b.index) or
+                                           (a.text and b.text and a.text<b.text); end);
    else
       table.sort(tab, function(a,b) return a.count and b.count and b.count<a.count; end);
+   end
+end
+
+FishingBuddy.StripRaw = function(fishie)
+   if ( fishie ) then
+      local s,e = string.find(fishie, FishingBuddy.RAW.." ");
+      if ( s ) then
+         if ( s > 1 ) then
+	    fishie = string.sub(fishie, 1, s-1)..string.sub(fishie, e+1);
+         else
+	    fishie = string.sub(fishie, e+1);
+         end
+      else
+         s,e = string.find(fishie, " "..FishingBuddy.RAW);
+         if ( s ) then
+	    fishie = string.sub(fishie, 1, s-1)..string.sub(fishie, e+1);
+         end
+      end
+      return fishie;
+   end
+   -- this means an import failed somewhere
+   return FishingBuddy.UNKNOWN;
+end
+
+FishingBuddy.ToggleDropDownMenu = function(level, value, menu, anchor, xOffset, yOffset)
+   ToggleDropDownMenu(level, value, menu, anchor, xOffset, yOffset);
+   if (not level) then
+      level = 1;
+   end
+   local anchorName;
+   if ( type(anchor) == "string" ) then
+      anchorName = anchor;
+   else
+      anchorName = anchor:GetName();
+   end
+   local frame = getglobal("DropDownList"..level);
+   local uiScale = UIParent:GetScale()
+   if ( frame:GetRight() > ( GetScreenWidth()*uiScale ) ) then
+      if ( anchorName == "cursor" ) then
+         if ( not xOffset ) then
+            xOffset = 0;
+         end
+         if ( not yOffset ) then
+            yOffset = 0;
+         end
+         local cursorX, cursorY = GetCursorPosition();
+         xOffset = -cursorX + xOffset;
+         yOffset = cursorY + yOffset;
+      else
+         if ( not xOffset or not yOffset ) then
+            xOffset = 8;
+            yOffset = 22;
+         end
+      end
+      frame:ClearAllPoints();
+      frame:SetPoint("TOPRIGHT", anchorName, "BOTTOMLEFT", -xOffset, yOffset);
+   end
+   if ( frame:GetBottom() < 0 ) then
+      frame:ClearAllPoints();
+      frame:SetPoint("BOTTOMRIGHT", anchorName, "BOTTOMLEFT", -xOffset, yOffset);
    end
 end
 

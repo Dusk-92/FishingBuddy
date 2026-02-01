@@ -31,6 +31,11 @@
 			FishingBuddy.Command(FishingBuddy.SWITCH);
 		end
 	</Binding>
+	<Binding name="FISHINGBUDDY_GOFISHING">
+		if ( keystate == "down" ) then
+			FishingBuddy.SuitUpAndGoFishing();
+		end
+	</Binding>
 	<!-- Hidden bindings -->
 	<Binding name="FISHINGBUDDY_PERFORMCAST" runOnUp="true" hidden="true">
 		if ( keystate == "up" ) then

@@ -92,6 +92,14 @@
 			</Layer>
 		</Layers>
 		<Frames>
+			<Frame name="FishingBuddyGraphMenu" inherits="UIDropDownMenuTemplate">
+				<Scripts>
+					<OnLoad>
+						this:SetFrameLevel(0);
+						UIDropDownMenu_SetWidth(180);
+					</OnLoad>
+				</Scripts>
+			</Frame>
 			<Frame name="$parentGraph1" enableMouse="true" inherits="FishingTracking24x2Frame">
 				<Size>
 					<AbsDimension x="280" y="120"/>
@@ -99,10 +107,21 @@
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
-							<AbsDimension x="48" y="-116"/>
+							<AbsDimension x="48" y="-100"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
+				<Scripts>
+					<OnMouseUp>
+						FishingBuddy.TrackingFrame.OnClick(arg1);
+					</OnMouseUp>
+					<OnEnter>
+						FishingBuddy.TrackingFrame.OnEnter();
+					</OnEnter>
+					<OnLeave>
+						FishingBuddy.TrackingFrame.OnLeave();
+					</OnLeave>
+				</Scripts>
 			</Frame>
 			<Frame name="$parentGraph2" enableMouse="true" inherits="FishingTracking53x2Frame">
 				<Size>
@@ -115,6 +134,17 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
+				<Scripts>
+					<OnMouseUp>
+						FishingBuddy.TrackingFrame.OnClick(arg1);
+					</OnMouseUp>
+					<OnEnter>
+						FishingBuddy.TrackingFrame.OnEnter();
+					</OnEnter>
+					<OnLeave>
+						FishingBuddy.TrackingFrame.OnLeave();
+					</OnLeave>
+				</Scripts>
 			</Frame>
 		</Frames>
 		<Scripts>

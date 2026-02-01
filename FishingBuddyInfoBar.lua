@@ -23,6 +23,8 @@ FishingBuddy.InfoBar.OnClick = function(button)
       else
 	 FishingBuddy.Command("");
       end
+   elseif ( IsShiftKeyDown() ) then
+      ToggleFishingBuddyFrame("FishingOptionsFrame");
    else
       -- Toggle menu
       local menu = getglobal("FishingBuddyInfoBarMenu");
@@ -37,18 +39,10 @@ FishingBuddy.InfoBar.OnEvent = function()
 end
 
 FishingBuddy.InfoBar.Tooltip = function()
-   local text = FishingBuddy.DESCRIPTION1.."\n"..FishingBuddy.DESCRIPTION2.."\n";
-   text = text.."|c"..FishingBuddy.Colors.GREEN;
-   if (FishingBuddy.GetSetting("InfoBarClickToSwitch") == 1) then
-      text = text..FishingBuddy.TOOLTIP_HINTSWITCH;
-   else
-      text = text..FishingBuddy.TOOLTIP_HINTTOGGLE;
-   end
-   text = text.."|r";
-   return text;
+   return FishingBuddy.TooltipBody("InfoBarClickToSwitch");
 end
 
 FishingBuddy.InfoBar.Menu_Initialize = function()
-   FishingBuddy.MakeDropDown(FishingBuddy.TITAN_CLICKTOSWITCH_ONOFF,
+   FishingBuddy.MakeDropDown(FishingBuddy.CLICKTOSWITCH_ONOFF,
 		"InfoBarClickToSwitch");
 end

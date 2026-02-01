@@ -1,19 +1,29 @@
-## Interface: 11000
-## Title: FishingBuddy v0.8.6h
-## Notes: Help with fishing related tasks -- clothing, fish information
+## Interface: 11200
+## Title: Fishing Buddy
+## Version: 0.8.8e
+## Notes: Help with fishing related tasks -- clothing, fish information, etc.
+## Notes-ruRU: Отслеживает какую рыбу и где вы поймали и помогает управлять вашим рыболовским снарежением.
 ## Notes-deDE: Erleichtert das Angeln - Ausr\195\188stung und Fish-Infos
-## Author: Sutorix-Windrunner
-## OptionalDeps: OutfitDisplayFrame, Outfitter, myAddOns, Titan, InfoBar, ButtonHole
+## Notes-frFR: Vous facilite la vie de pecheur. Informations sur les poissons, changement d'habits, etc.
+## Notes-esES: Ayude con las tareas relacionadas pesca -- ropa, informaci\195\179n de los pescados 
+## Author: Sutorix=AT=hotmail.com
+## OptionalDeps: FBEnEspagnol, OutfitDisplayFrame, Outfitter, myAddOns, FuBar, Titan, InfoBar, Gatherer, FuBar, ButtonHole
 ## SavedVariables: FishingBuddy_Info
 ## SavedVariablesPerCharacter: FishingBuddy_Player
-## ModWatcherID: 104
-## ModWatcherVersion: 11
+localization.lua
+localization.ru.lua
+localization.de.lua
+localization.es.lua
+localization.fr.lua
+FishingDebugging.lua
+FishingSetup.lua
 FishingBuddy.xml
 FishingBuddyFrame.xml
 FishingOptionsFrame.xml
 FishingLocationsFrame.xml
-FishingOutfitFrame.xml
 FishingOutfitManager.xml
+FishingOutfitFrame.xml
+FishingOutfitter.lua
 FishingBuddyTitan.xml
 FishingBuddyMinimap.xml
 FishingBuddyInfoBar.xml
@@ -21,4 +31,4 @@ FishingExtravaganza.xml
 FishingWatcher.xml
 GraphHandler.xml
 FishingTrackingFrame.xml
-FishingDebugging.lua
+FishingSchools.lua
