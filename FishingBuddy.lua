@@ -8,6 +8,7 @@ local POLES = {
    ["Strong Fishing Pole"] = "6365:0:0:0",
    ["Darkwood Fishing Pole"] = "6366:0:0:0",
    ["Big Iron Fishing Pole"] = "6367:0:0:0",
+   ["Driftwood Fishing Pole"] = "7010:0:0:0",
    ["Blump Family Fishing Pole"] = "12225:0:0:0",
    ["Nat Pagle's Extreme Angler FC-5000"] = "19022:0:0:0",
    ["Arcanite Fishing Pole"] = "19970:0:0:0",
