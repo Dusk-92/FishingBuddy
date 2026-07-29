@@ -1,4 +1,4 @@
-# 🎣 FishingBuddy
+# 🎣 FishingBuddy for OctoWow
 
 **OctoWoW addon** — the all-in-one fishing companion for classic WoW.
 
