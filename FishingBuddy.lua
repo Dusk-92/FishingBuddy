@@ -12,12 +12,19 @@ local POLES = {
    ["Blump Family Fishing Pole"] = "12225:0:0:0",
    ["Nat Pagle's Extreme Angler FC-5000"] = "19022:0:0:0",
    ["Arcanite Fishing Pole"] = "19970:0:0:0",
+   ["Crude Fishing Rod"] = "42096:0:0:0",
+   ["Reliable Fishing Rod"] = "42105:0:0:0",
+   ["Mastercraft Fishing Rod"] = "42123:0:0:0",
    -- yeah, so you can't really use these (for now :-)
    ["Dwarven Fishing Pole"] = "3567:0:0:0",
    ["Goblin Fishing Pole"] = "4598:0:0:0",
 }
 
 local FISHINGLURES = {
+   [114] = "Simple Fishing Lure",	-- 50 for 10 mins
+   [125] = "Spicy Fishing Lure",	-- 75 for 10 mins
+   [133] = "Savory Fishing Lure",	-- 100 for 5 mins
+   [145] = "Premium Fishing Lure",	-- 125 for 5 mins
    [6533] = "Aquadynamic Fish Attractor",	-- 100 for 5 mins
    [7307] = "Flesh Eating Worm",		-- 75 for 10 mins
    [6532] = "Bright Baubles",			-- 75 for 10 mins
