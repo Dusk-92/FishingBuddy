@@ -41,6 +41,36 @@ A fork of the original *FishingBuddy* (TackleBox + Impp's Fishing Info + outfit 
 
 ---
 
+## 📜 Project identity & licensing
+
+This is an independent community-maintained fork of the historical **Fishing
+Buddy** addon.
+
+The current official Fishing Buddy projects maintained by **Sutorix** are marked
+**All Rights Reserved** on CurseForge. This fork therefore does **not** claim to
+relicense inherited Fishing Buddy code or assets under MIT, GPL, public domain,
+or another permissive license.
+
+Known GitHub ancestry:
+
+- [aim2kill/FishingBuddy](https://github.com/aim2kill/FishingBuddy)
+- [refaim/FishingBuddy](https://github.com/refaim/FishingBuddy)
+- this maintained fork
+
+Compatibility with **World of Warcraft**, **OctoWoW**, **Titan**, **FuBar**,
+**Gatherer**, **Outfitter**, or other referenced addons does not imply
+affiliation, endorsement, or sponsorship.
+
+For details, see:
+
+- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
+- [PROJECT_IDENTITY.md](PROJECT_IDENTITY.md)
+- [Docs/CODE_PROVENANCE.md](Docs/CODE_PROVENANCE.md)
+- [Docs/ASSET_PROVENANCE.md](Docs/ASSET_PROVENANCE.md)
+- [LICENSES/](LICENSES/)
+
+---
+
 ## 🙏 Credits
 
 Original addon by the FishingBuddy authors, with thanks to TackleBox, Impp's Fishing DB, QuickWeaponSwap, GuildMap and more.
