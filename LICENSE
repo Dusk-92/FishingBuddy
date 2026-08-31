@@ -1,0 +1,38 @@
+FishingBuddy mixed-origin rights and provenance notice
+
+This repository contains material from multiple origins.
+
+1. Dusk-92-authored changes and documentation
+   Copyright (c) 2026 Dusk-92.
+   All rights reserved unless a specific file states otherwise.
+
+2. Inherited Fishing Buddy code and assets
+   Most runtime code and assets descend from the historical Fishing Buddy addon
+   associated with Sutorix and from later GitHub maintenance forks.
+
+   The current official Fishing Buddy projects maintained by Sutorix on
+   CurseForge are marked "All Rights Reserved".
+
+   No permission is granted by this file to copy, modify, redistribute, or
+   relicense inherited Fishing Buddy code or assets beyond whatever rights may
+   independently exist from the applicable original rights holders.
+
+   This file does NOT relicense inherited Fishing Buddy material under MIT,
+   GPL, public domain, or another permissive/open-source license.
+
+3. Historical third-party references
+   Historical source comments and documentation reference or credit projects
+   including TackleBox, Impp's Fishing Info / Fishing DB, QuickWeaponSwap,
+   GuildMap, Gatherer, Titan, FuBar, Outfitter, myAddOns, InfoBar, ButtonHole,
+   OutfitDisplayFrame, and others.
+
+   Those projects remain subject to their own rights and licenses. Their names,
+   APIs, or historically adapted concepts are not relicensed by this file.
+
+4. World of Warcraft / community-server compatibility
+   World of Warcraft, Warcraft, Blizzard Entertainment, OctoWoW and associated
+   names, marks, artwork, sounds, game data, and game assets remain the property
+   of their respective rights holders.
+
+See THIRD_PARTY_NOTICES.md, PROJECT_IDENTITY.md, Docs/, and LICENSES/ for
+provenance and scope details.
